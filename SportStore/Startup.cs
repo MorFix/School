@@ -20,10 +20,10 @@ namespace SportStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string dbConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            var dbConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddControllersWithViews();            
-            services.AddDbContext<DataBaseContext>(opt => opt.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)));
+            services.AddDbContext<SchoolContext>(opt => opt.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
