@@ -9,7 +9,7 @@ namespace SportStore.DataBase
         public DbSet<Class> Classes { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
 
-        public SchoolContext(DbContextOptions<DataBaseContext> options) : base(options)
+        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {
         }
 

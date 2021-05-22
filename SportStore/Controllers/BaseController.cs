@@ -1,47 +1,55 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.DataBase;
 using SportStore.Entities;
+using SportStore.Logic;
 
 namespace SportStore.Controllers
 {
-    public abstract class BaseController<T> : Controller where T : BaseEntity, new()
+    public abstract class BaseController<TEntity, TLogic> : Controller 
+        where TEntity : BaseEntity, new()
+        where TLogic : BaseLogic<TEntity>, new()
     {
-        private readonly SchoolContext _context;
+        public TLogic Logic { get; set; }
 
         protected BaseController(SchoolContext context)
         {
-            _context = context;
+            Logic = new TLogic {Context = context};
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            return View(new List<T>());
+            return View(Logic.GetAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-            return View(new T());
+            return View(Logic.GetById(id));
         }
 
 
         [HttpPost]
         public IActionResult Insert()
         {
+            Logic.Insert();
+
             return View();
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(string id)
         {
+            Logic.Update(id);
+
             return View();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
+            Logic.Delete(id);
+
             return View();
         }
     }
