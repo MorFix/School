@@ -4,6 +4,12 @@ namespace SportStore.Entities
 {
     public class Teacher : Person
     {
-        public IEnumerable<Class> Classes { get; set; }
+        public Class Classes { get; set; }
+        public IEnumerable<Lesson> Lessons { get; set; }
+
+        public Teacher()
+        {
+            Lessons = new List<Lesson>();
+        }
     }
 }

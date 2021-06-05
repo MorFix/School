@@ -7,5 +7,10 @@ namespace SportStore.Entities
         public string Name { get; set; }
         public Teacher Teacher { get; set; }
         public IEnumerable<Student> Students { get; set; }
+
+        public Class()
+        {
+            Students = new List<Student>();
+        }
     }
 }

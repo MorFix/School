@@ -8,6 +8,7 @@ namespace SportStore.DataBase
         public DbSet<Student> Students { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
 
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {
@@ -16,12 +17,20 @@ namespace SportStore.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>()
-                .HasMany(c => c.Classes)
+                .HasOne(c => c.Classes)
                 .WithMany(s => s.Students);
 
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Lessons)
+                .WithMany(l => l.Students);
+
             modelBuilder.Entity<Teacher>()
-                .HasMany(c => c.Classes)
-                .WithOne(t => t.Teacher);
+                .HasOne(t => t.Classes)
+                .WithOne(c => c.Teacher);
+
+            modelBuilder.Entity<Lesson>()
+                .HasOne(l => l.Teacher)
+                .WithMany(t => t.Lessons);
         }
     }
 }
