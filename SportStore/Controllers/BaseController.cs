@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportStore.DataBase;
 using SportStore.Entities;
 using SportStore.Logic;
 
 namespace SportStore.Controllers
 {
+    [Authorize]
     public abstract class BaseController<TEntity, TLogic> : Controller 
         where TEntity : BaseEntity, new()
         where TLogic : BaseLogic<TEntity>, new()
