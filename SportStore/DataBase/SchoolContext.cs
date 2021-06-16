@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportStore.Entities;
+using SportStore.Seed;
 
 namespace SportStore.DataBase
 {
     public class SchoolContext : DbContext
     {
+        public DbSet<Person> People { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
@@ -16,21 +18,29 @@ namespace SportStore.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>()
+            var studentBuilder = modelBuilder.Entity<Student>(); 
+            var teacherBuilder = modelBuilder.Entity<Teacher>(); 
+            var lessonBuilder = modelBuilder.Entity<Lesson>(); 
+            
+            studentBuilder
                 .HasOne(c => c.Classes)
                 .WithMany(s => s.Students);
 
-            modelBuilder.Entity<Student>()
+            studentBuilder
                 .HasMany(s => s.Lessons)
                 .WithMany(l => l.Students);
 
-            modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.Classes)
+            studentBuilder.HasData(new StudentsSeed().GetData());
+            
+            teacherBuilder
+                .HasMany(t => t.Classes)
                 .WithOne(c => c.Teacher);
+            teacherBuilder.HasData(new TeachersSeed().GetData());
 
-            modelBuilder.Entity<Lesson>()
+            lessonBuilder
                 .HasOne(l => l.Teacher)
                 .WithMany(t => t.Lessons);
+            lessonBuilder.HasData(new LessonsSeed().GetData());
         }
     }
 }

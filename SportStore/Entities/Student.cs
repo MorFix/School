@@ -7,7 +7,8 @@ namespace SportStore.Entities
         public Class Classes { get; set; }
         public IEnumerable<Lesson> Lessons { get; set; }
 
-        public Student()
+        public Student(string idNumber, string firstName, string lastName, string password)
+            : base(idNumber, firstName, lastName, password)
         {
             Lessons = new List<Lesson>();
         }

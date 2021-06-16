@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SportStore.DataBase;
 using SportStore.Entities;
 using SportStore.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -14,6 +16,13 @@ namespace SportStore.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private SchoolContext Ctx { get;  }
+
+        public HomeController(SchoolContext ctx)
+        {
+            Ctx = ctx;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -27,28 +36,24 @@ namespace SportStore.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password, string ReturnUrl)
+        public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
-            var dbUser = new Person() { IdNumber = "1234" };
-
-            // TODO: Check dbUser != null;
-            if (username == "admin" && password == "admin")
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, dbUser.IdNumber)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, "Login");
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-                return Redirect(ReturnUrl == null ? "/Home" : ReturnUrl);
-            }
-            else
+            var dbUser = Ctx.People.FirstOrDefault(x => x.IdNumber == username && x.Password == password);
+            if (dbUser == null)
             {
                 return View(new LoginViewModel("הפרטים אינם נכונים"));
             }
+            
+            var claims = new List<Claim>
+            {
+                new (ClaimTypes.Name, dbUser.IdNumber)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "Login");
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+            return Redirect(returnUrl ?? "/Home");
         }
 
         [AllowAnonymous]
@@ -59,12 +64,19 @@ namespace SportStore.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password)
+        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName)
         {
-            // TODO: Save to DB and redirect
+            var dbUser = Ctx.People.FirstOrDefault(x => x.IdNumber == username);
+            if (dbUser != null)
+            {
+                return View(new LoginViewModel("המשתמש קיים במערכת"));
+            }
 
+            Ctx.Students.Add(new Student(username, firstName, lastName, password));
 
-            return View();
+            await Ctx.SaveChangesAsync();
+            
+            return Redirect("/Home");
         }
 
         public async Task<IActionResult> Logout()

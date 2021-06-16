@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SportStore.DataBase;
 using SportStore.Entities;
@@ -16,7 +17,7 @@ namespace SportStore.Logic
             return GetEntities();
         }
 
-        public T GetById(string id)
+        public T GetById(Guid id)
         {
             return GetEntities().Find(id);
         }

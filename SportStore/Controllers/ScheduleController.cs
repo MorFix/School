@@ -2,10 +2,12 @@
 using SportStore.DataBase;
 using SportStore.Entities;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportStore.Controllers
 {
     [Route("schedule")]
+    [Authorize]
     public class ScheduleController : Controller
     {
         private SchoolContext _ctx;
