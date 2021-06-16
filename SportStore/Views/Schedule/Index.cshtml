@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SportStore.Entities.Lesson>
+
+@{
+    ViewData["Title"] = "Schedule";
+    var lessons = Model
+        .GroupBy(x => x.Hour)
+        .ToDictionary(x => x.Key, y => y.ToList());
+}
+
+<table class="table table-bordered schedule-table">
+    <thead>
+    <tr>
+        <td></td>
+        <td>א</td>
+        <td>ב</td>
+        <td>ג</td>
+        <td>ד</td>
+        <td>ה</td>
+        <td>ו</td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var hour in lessons.Keys)
+    {
+        var nextHour = hour + 1;
+        <tr>
+            <td>@nextHour:00 - @hour:00</td>
+            @foreach (var lesson in lessons[hour].OrderBy(x => x.DayOfWeek))
+            {
+                <td>@lesson.Subject</td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
