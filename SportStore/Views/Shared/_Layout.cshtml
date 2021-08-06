@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/shared-styles.css" />
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '323736235913674',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v1.0'
+            });
+        };
+
+        const openShareDialog = () => {
+            FB.ui({
+                method: 'share',
+                href: 'https://developers.facebook.com/docs/',
+                hashtag: '#u_market',
+                quote: `hiiiii`
+            });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -46,6 +66,8 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">הרשמה</a>
                             </li>
                         }
+
+                        <button onclick="openShareDialog()"></button>
                     </ul>
                 </div>
             </div>
