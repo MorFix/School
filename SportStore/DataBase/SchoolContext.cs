@@ -18,29 +18,37 @@ namespace SportStore.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var studentBuilder = modelBuilder.Entity<Student>(); 
-            var teacherBuilder = modelBuilder.Entity<Teacher>(); 
-            var lessonBuilder = modelBuilder.Entity<Lesson>(); 
+            var studentBuilder = modelBuilder.Entity<Student>();
+            var teacherBuilder = modelBuilder.Entity<Teacher>();
+            var lessonBuilder = modelBuilder.Entity<Lesson>();
+            var classBuilder = modelBuilder.Entity<Class>();
             
             studentBuilder
-                .HasOne(c => c.Classes)
+                .HasOne(c => c.Class)
                 .WithMany(s => s.Students);
 
-            studentBuilder
-                .HasMany(s => s.Lessons)
-                .WithMany(l => l.Students);
+            classBuilder
+                .HasMany(c => c.Students)
+                .WithOne(s => s.Class);
+            classBuilder
+                .HasMany(c => c.Lessons)
+                .WithMany(l => l.Classes);
 
-            studentBuilder.HasData(new StudentsSeed().GetData());
-            
-            teacherBuilder
-                .HasMany(t => t.Classes)
-                .WithOne(c => c.Teacher);
-            teacherBuilder.HasData(new TeachersSeed().GetData());
-
+            lessonBuilder
+                .HasMany(l => l.Classes)
+                .WithMany(c => c.Lessons);
             lessonBuilder
                 .HasOne(l => l.Teacher)
                 .WithMany(t => t.Lessons);
-            lessonBuilder.HasData(new LessonsSeed().GetData());
+
+            teacherBuilder
+                .HasMany(t => t.Lessons);
+
+            var seeder = new SchoolSeed();
+            studentBuilder.HasData(seeder.Students);          
+            teacherBuilder.HasData(seeder.Teachers);
+            lessonBuilder.HasData(seeder.Lessons);
+            classBuilder.HasData(seeder.Classes);
         }
     }
 }

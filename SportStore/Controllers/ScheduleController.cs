@@ -19,14 +19,7 @@ namespace SportStore.Controllers
 
         public IActionResult Index()
         {
-            return View(new List<Lesson> { 
-                new() {Subject="english", DayOfWeek=System.DayOfWeek.Monday, Hour = 4},
-                new() {Subject="hebrew", DayOfWeek=System.DayOfWeek.Tuesday, Hour = 4},
-                new() {Subject="ccc", DayOfWeek=System.DayOfWeek.Wednesday, Hour = 4},
-                new() {Subject="ddddd", DayOfWeek=System.DayOfWeek.Wednesday, Hour = 4},
-                new() {Subject="eeeeee", DayOfWeek=System.DayOfWeek.Wednesday, Hour = 4},
-                new() {Subject="fffff", DayOfWeek=System.DayOfWeek.Wednesday, Hour = 4},
-            });
+            return View(new List<Lesson>());
         }
     }
 }
