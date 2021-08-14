@@ -2,6 +2,7 @@ using SportStore.Entities;
 using SportStore.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SportStore.Seed
 {
@@ -28,135 +29,126 @@ namespace SportStore.Seed
             var teacher7 = new Teacher("12345677", "Lior", "Lod", "1234");
             var teacher8 = new Teacher("12345678", "Dror", "Perl", "1234");
 
-            var student1 = new Student("312345614", "Avi", "Menash", "1234");
-            var student2 = new Student("314345628", "Orli", "Avraham", "1234");
-            var student3 = new Student("316345631", "Daniel", "Amit", "1234");
-            var student4 = new Student("314832911", "Michael", "Menash", "1234");
-            var student5 = new Student("325674677", "Ronit", "Danon", "1234");
-            var student6 = new Student("325142444", "Amit", "Hachmon", "1234");
-            var student7 = new Student("318273625", "Dana", "Erez", "1234");
-            var student8 = new Student("324152614", "May", "Menash", "1234");
-            var student9 = new Student("211234561", "Maya", "Menash", "1234");
-            var student10 = new Student("211234561", "Rahav", "Menash", "1234");
-            var student11 = new Student("211234561", "Ori", "Menash", "1234");
-            var student12 = new Student("411234561", "Avi", "Menash", "1234");
-            var student13 = new Student("211234561", "Michal", "Menash", "1234");
-            var student14 = new Student("411234561", "Avi", "Menash", "1234");
-            var student15 = new Student("311234561", "Avi", "Menash", "1234");
-            var student16 = new Student("223234561", "Omer", "Menash", "1234");
-            var student17 = new Student("215243222", "Tal", "Menash", "1234");
-            var student18 = new Student("231144562", "Noa", "Menash", "1234");
-            var student19 = new Student("311278522", "Yael`", "Menash", "1234");
-            var student20 = new Student("266254190", "Lior", "Menash", "1234");
+            var class1 = new Class("A1", teacher1.Id);
+            var class2 = new Class("A2", teacher2.Id);
+            var class3 = new Class("A3", teacher3.Id);
 
-            var class1 = new Class("A1", teacher1)
-            {
-                Students = new Student[] {student1, student2, student3, student4, student5, student6, student7}
-            };
-            var class2 = new Class("A2", teacher2)
-            {
-                Students = new Student[] {student8, student9, student10, student11, student12, student13, student14,}
-            };
-            var class3 = new Class("A3", teacher3)
-            {
-                Students = new Student[] {student15, student16, student17, student18, student19, student20}
-            };
+            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id);
+            var student2 = new Student("314345628", "Orli", "Avraham", "1234", class1.Id);
+            var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id);
+            var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id);
+            var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id);
+            var student6 = new Student("325142444", "Amit", "Hachmon", "1234", class1.Id);
+            var student7 = new Student("318273625", "Dana", "Erez", "1234", class1.Id);
+            var student8 = new Student("324152614", "May", "Menash", "1234", class2.Id);
+            var student9 = new Student("211234561", "Maya", "Menash", "1234", class2.Id);
+            var student10 = new Student("211234561", "Rahav", "Menash", "1234", class2.Id);
+            var student11 = new Student("211234561", "Ori", "Menash", "1234", class2.Id);
+            var student12 = new Student("411234561", "Avi", "Menash", "1234", class2.Id);
+            var student13 = new Student("211234561", "Michal", "Menash", "1234", class2.Id);
+            var student14 = new Student("411234561", "Avi", "Menash", "1234", class2.Id);
+            var student15 = new Student("311234561", "Avi", "Menash", "1234", class3.Id);
+            var student16 = new Student("223234561", "Omer", "Menash", "1234", class3.Id);
+            var student17 = new Student("215243222", "Tal", "Menash", "1234", class3.Id);
+            var student18 = new Student("231144562", "Noa", "Menash", "1234", class3.Id);
+            var student19 = new Student("311278522", "Yael`", "Menash", "1234", class3.Id);
+            var student20 = new Student("266254190", "Lior", "Menash", "1234", class3.Id);
 
             // Sunday
-            var lessonSunday1A1 = new Lesson(teacher1, Subject.Art, DayOfWeek.Sunday, 1) {Students = class1.Students};
-            var lessonSunday2A1A2 = new Lesson(teacher2, Subject.Boxing, DayOfWeek.Sunday, 2){Students = class1.Students};
-            var lessonSunday3A1 = new Lesson(teacher3, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class1.Students };
-            var lessonSunday4A1 = new Lesson(teacher4, Subject.English, DayOfWeek.Sunday, 4) {Students = class1.Students};
-            var lessonSunday5A1 = new Lesson(teacher5, Subject.Math, DayOfWeek.Sunday, 5) {Students = class1.Students};
-            var lessonSunday6A1 = new Lesson(teacher6,  Subject.Music, DayOfWeek.Sunday, 6){Students = class1.Students};
+            var lessonSunday1A1 = new Lesson(teacher1.Id, Subject.Art, DayOfWeek.Sunday, 1) {Students = class1.Students};
+            var lessonSunday2A1A2 = new Lesson(teacher2.Id, Subject.Boxing, DayOfWeek.Sunday, 2){Students = class1.Students.Concat(class2.Students)};
+            var lessonSunday3A1 = new Lesson(teacher3.Id, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class1.Students };
+            var lessonSunday4A1 = new Lesson(teacher4.Id, Subject.English, DayOfWeek.Sunday, 4) {Students = class1.Students};
+            var lessonSunday5A1 = new Lesson(teacher5.Id, Subject.Math, DayOfWeek.Sunday, 5) {Students = class1.Students};
+            var lessonSunday6A1 = new Lesson(teacher6.Id,  Subject.Music, DayOfWeek.Sunday, 6){Students = class1.Students};
+                                                     
+            var lessonSunday1A2 = new Lesson(teacher5.Id, Subject.Art, DayOfWeek.Sunday, 1) { Students = class2.Students };
+            var lessonSunday3A2 = new Lesson(teacher2.Id, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class2.Students };
+            var lessonSunday4A2 = new Lesson(teacher3.Id, Subject.English, DayOfWeek.Sunday, 4) { Students = class2.Students };
+            var lessonSunday5A2 = new Lesson(teacher1.Id, Subject.Math, DayOfWeek.Sunday, 5) { Students = class2.Students };
 
-            var lessonSunday1A2 = new Lesson(teacher5, Subject.Art, DayOfWeek.Sunday, 1) { Students = class2.Students };
-            var lessonSunday3A2 = new Lesson(teacher2, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class2.Students };
-            var lessonSunday4A2 = new Lesson(teacher3, Subject.English, DayOfWeek.Sunday, 4) { Students = class2.Students };
-            var lessonSunday5A2 = new Lesson(teacher1, Subject.Math, DayOfWeek.Sunday, 5) { Students = class2.Students };
-
-            var lessonSunday1A3 = new Lesson(teacher2, Subject.Art, DayOfWeek.Sunday, 1) { Students = class3.Students };
-            var lessonSunday2A3 = new Lesson(teacher3, Subject.Boxing, DayOfWeek.Sunday, 2) { Students = class3.Students };
-            var lessonSunday3A3 = new Lesson(teacher4, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class3.Students };
-            var lessonSunday4A3 = new Lesson(teacher5, Subject.English, DayOfWeek.Sunday, 4) { Students = class3.Students };
-            var lessonSunday5A3 = new Lesson(teacher6, Subject.Math, DayOfWeek.Sunday, 5) { Students = class3.Students };
-            var lessonSunday6A3 = new Lesson(teacher7, Subject.Music, DayOfWeek.Sunday, 6) { Students = class3.Students };
-            var lessonSunday7A3 = new Lesson(teacher1, Subject.Music, DayOfWeek.Sunday, 6) { Students = class3.Students };
+            var lessonSunday1A3 = new Lesson(teacher2.Id, Subject.Art, DayOfWeek.Sunday, 1) { Students = class3.Students };
+            var lessonSunday2A3 = new Lesson(teacher3.Id, Subject.Boxing, DayOfWeek.Sunday, 2) { Students = class3.Students };
+            var lessonSunday3A3 = new Lesson(teacher4.Id, Subject.Economics, DayOfWeek.Sunday, 3) { Students = class3.Students };
+            var lessonSunday4A3 = new Lesson(teacher5.Id, Subject.English, DayOfWeek.Sunday, 4) { Students = class3.Students };
+            var lessonSunday5A3 = new Lesson(teacher6.Id, Subject.Math, DayOfWeek.Sunday, 5) { Students = class3.Students };
+            var lessonSunday6A3 = new Lesson(teacher7.Id, Subject.Music, DayOfWeek.Sunday, 6) { Students = class3.Students };
+            var lessonSunday7A3 = new Lesson(teacher1.Id, Subject.Music, DayOfWeek.Sunday, 6) { Students = class3.Students };
 
             // Monday                                 
-            var lessonMonday1A1 = new Lesson(teacher1, Subject.Art, DayOfWeek.Monday, 1) { Students = class1.Students };
-            var lessonMonday2A1 = new Lesson(teacher2, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class1.Students };
-            var lessonMonday3A1 = new Lesson(teacher8, Subject.English, DayOfWeek.Monday, 3) { Students = class1.Students };
-            var lessonMonday4A1 = new Lesson(teacher4, Subject.Math, DayOfWeek.Monday, 4) { Students = class1.Students };
-            var lessonMonday5A1 = new Lesson(teacher5, Subject.Music, DayOfWeek.Monday, 5) { Students = class1.Students };
-
-            var lessonMonday1A2 = new Lesson(teacher1, Subject.Art, DayOfWeek.Monday, 1) { Students = class2.Students };
-            var lessonMonday2A2 = new Lesson(teacher2, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class2.Students };
-            var lessonMonday3A2 = new Lesson(teacher7, Subject.English, DayOfWeek.Monday, 3) { Students = class2.Students };
-            var lessonMonday4A2 = new Lesson(teacher4, Subject.Math, DayOfWeek.Monday, 4) { Students = class2.Students };
-
-            var lessonMonday1A3 = new Lesson(teacher2, Subject.Art, DayOfWeek.Monday, 1) { Students = class3.Students };
-            var lessonMonday2A3 = new Lesson(teacher3, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class3.Students };
-            var lessonMonday3A3 = new Lesson(teacher4, Subject.English, DayOfWeek.Monday, 3) { Students = class3.Students };
-            var lessonMonday4A3 = new Lesson(teacher7, Subject.Math, DayOfWeek.Monday, 4) { Students = class3.Students };
+            var lessonMonday1A1 = new Lesson(teacher1.Id, Subject.Art, DayOfWeek.Monday, 1) { Students = class1.Students };
+            var lessonMonday2A1 = new Lesson(teacher2.Id, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class1.Students };
+            var lessonMonday3A1 = new Lesson(teacher8.Id, Subject.English, DayOfWeek.Monday, 3) { Students = class1.Students };
+            var lessonMonday4A1 = new Lesson(teacher4.Id, Subject.Math, DayOfWeek.Monday, 4) { Students = class1.Students };
+            var lessonMonday5A1 = new Lesson(teacher5.Id, Subject.Music, DayOfWeek.Monday, 5) { Students = class1.Students };
+                                                     
+            var lessonMonday1A2 = new Lesson(teacher1.Id, Subject.Art, DayOfWeek.Monday, 1) { Students = class2.Students };
+            var lessonMonday2A2 = new Lesson(teacher2.Id, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class2.Students };
+            var lessonMonday3A2 = new Lesson(teacher7.Id, Subject.English, DayOfWeek.Monday, 3) { Students = class2.Students };
+            var lessonMonday4A2 = new Lesson(teacher4.Id, Subject.Math, DayOfWeek.Monday, 4) { Students = class2.Students };
+                                                     
+            var lessonMonday1A3 = new Lesson(teacher2.Id, Subject.Art, DayOfWeek.Monday, 1) { Students = class3.Students };
+            var lessonMonday2A3 = new Lesson(teacher3.Id, Subject.Boxing, DayOfWeek.Monday, 2) { Students = class3.Students };
+            var lessonMonday3A3 = new Lesson(teacher4.Id, Subject.English, DayOfWeek.Monday, 3) { Students = class3.Students };
+            var lessonMonday4A3 = new Lesson(teacher7.Id, Subject.Math, DayOfWeek.Monday, 4) { Students = class3.Students };
 
             // Tuesday
-            var lessonTuesday1A1A2A3 = new Lesson(teacher1, Subject.Music, DayOfWeek.Tuesday, 1){ Students = class1.Students };
-            var lessonTuesday2A1A2A3 = new Lesson(teacher2, Subject.Music, DayOfWeek.Tuesday, 2) { Students = class1.Students };
-            var lessonTuesday3A1 = new Lesson(teacher8, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class1.Students };
-            var lessonTuesday4A1 = new Lesson(teacher4, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class1.Students };
-            var lessonTuesday5A1 = new Lesson(teacher5, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class1.Students };
-            var lessonTuesday6A1 = new Lesson(teacher6, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class1.Students };
+            var lessonTuesday1A1A2A3 = new Lesson(teacher1.Id, Subject.Music, DayOfWeek.Tuesday, 1){ Students = class1.Students.Concat(class2.Students.Concat(class3.Students)) };
+            var lessonTuesday2A1A2A3 = new Lesson(teacher2.Id, Subject.Music, DayOfWeek.Tuesday, 2) { Students = class1.Students.Concat(class2.Students.Concat(class3.Students)) };
+            var lessonTuesday3A1 = new Lesson(teacher8.Id, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class1.Students };
+            var lessonTuesday4A1 = new Lesson(teacher4.Id, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class1.Students };
+            var lessonTuesday5A1 = new Lesson(teacher5.Id, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class1.Students };
+            var lessonTuesday6A1 = new Lesson(teacher6.Id, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class1.Students };
 
-            var lessonTuesday3A2 = new Lesson(teacher4, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class2.Students };
-            var lessonTuesday4A2 = new Lesson(teacher3, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class2.Students };
-            var lessonTuesday5A2 = new Lesson(teacher7, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class2.Students };
-            var lessonTuesday6A2 = new Lesson(teacher1, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class2.Students };
+            var lessonTuesday3A2 = new Lesson(teacher4.Id, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class2.Students };
+            var lessonTuesday4A2 = new Lesson(teacher3.Id, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class2.Students };
+            var lessonTuesday5A2 = new Lesson(teacher7.Id, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class2.Students };
+            var lessonTuesday6A2 = new Lesson(teacher1.Id, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class2.Students };
 
-            var lessonTuesday3A3 = new Lesson(teacher2, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class3.Students };
-            var lessonTuesday4A3 = new Lesson(teacher1, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class3.Students };
-            var lessonTuesday5A3 = new Lesson(teacher7, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class3.Students };
-            var lessonTuesday6A3 = new Lesson(teacher8, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class3.Students };
+            var lessonTuesday3A3 = new Lesson(teacher2.Id, Subject.Spanish, DayOfWeek.Tuesday, 3) { Students = class3.Students };
+            var lessonTuesday4A3 = new Lesson(teacher1.Id, Subject.Boxing, DayOfWeek.Tuesday, 4) { Students = class3.Students };
+            var lessonTuesday5A3 = new Lesson(teacher7.Id, Subject.Economics, DayOfWeek.Tuesday, 5) { Students = class3.Students };
+            var lessonTuesday6A3 = new Lesson(teacher8.Id, Subject.Art, DayOfWeek.Tuesday, 6) { Students = class3.Students };
 
             // Wednesday
-            var lessonWednesday1A1 = new Lesson(teacher1, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class1.Students };
-            var lessonWednesday2A1 = new Lesson(teacher2, Subject.English, DayOfWeek.Wednesday, 2) { Students = class1.Students };
-            var lessonWednesday3A1 = new Lesson(teacher3, Subject.English, DayOfWeek.Wednesday, 3) { Students = class1.Students };
-            var lessonWednesday4A1 = new Lesson(teacher4, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class1.Students };
-
-            var lessonWednesday1A2 = new Lesson(teacher7, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class2.Students };
-            var lessonWednesday2A2 = new Lesson(teacher8, Subject.English, DayOfWeek.Wednesday, 2) { Students = class2.Students };
-            var lessonWednesday3A2 = new Lesson(teacher3, Subject.English, DayOfWeek.Wednesday, 3) { Students = class2.Students };
-            var lessonWednesday4A2 = new Lesson(teacher4, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class2.Students };
-
-            var lessonWednesday1A3 = new Lesson(teacher3, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class3.Students };
-            var lessonWednesday2A3 = new Lesson(teacher4, Subject.English, DayOfWeek.Wednesday, 2) { Students = class3.Students };
-            var lessonWednesday3A3 = new Lesson(teacher7, Subject.English, DayOfWeek.Wednesday, 3) { Students = class3.Students };
-            var lessonWednesday4A3 = new Lesson(teacher8, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class3.Students };
+            var lessonWednesday1A1 = new Lesson(teacher1.Id, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class1.Students };
+            var lessonWednesday2A1 = new Lesson(teacher2.Id, Subject.English, DayOfWeek.Wednesday, 2) { Students = class1.Students };
+            var lessonWednesday3A1 = new Lesson(teacher3.Id, Subject.English, DayOfWeek.Wednesday, 3) { Students = class1.Students };
+            var lessonWednesday4A1 = new Lesson(teacher4.Id, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class1.Students };
+                                                        
+            var lessonWednesday1A2 = new Lesson(teacher7.Id, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class2.Students };
+            var lessonWednesday2A2 = new Lesson(teacher8.Id, Subject.English, DayOfWeek.Wednesday, 2) { Students = class2.Students };
+            var lessonWednesday3A2 = new Lesson(teacher3.Id, Subject.English, DayOfWeek.Wednesday, 3) { Students = class2.Students };
+            var lessonWednesday4A2 = new Lesson(teacher4.Id, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class2.Students };
+                                                        
+            var lessonWednesday1A3 = new Lesson(teacher3.Id, Subject.Spanish, DayOfWeek.Wednesday, 1) { Students = class3.Students };
+            var lessonWednesday2A3 = new Lesson(teacher4.Id, Subject.English, DayOfWeek.Wednesday, 2) { Students = class3.Students };
+            var lessonWednesday3A3 = new Lesson(teacher7.Id, Subject.English, DayOfWeek.Wednesday, 3) { Students = class3.Students };
+            var lessonWednesday4A3 = new Lesson(teacher8.Id, Subject.Economics, DayOfWeek.Wednesday, 4) { Students = class3.Students };
 
             // Thursday
-            var lessonThursday1A1 = new Lesson(teacher1, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class1.Students };
-            var lessonThursday3A1 = new Lesson(teacher2, Subject.Boxing, DayOfWeek.Thursday, 2) { Students = class1.Students };
-            var lessonThursday4A1 = new Lesson(teacher3, Subject.Math, DayOfWeek.Thursday, 3) { Students = class1.Students };
-            var lessonThursday5A1 = new Lesson(teacher4, Subject.Math, DayOfWeek.Thursday, 4) { Students = class1.Students };
-            var lessonThursday6A1 = new Lesson(teacher5, Subject.Math, DayOfWeek.Thursday, 5) { Students = class1.Students };
-            var lessonThursday7A1 = new Lesson(teacher6, Subject.Math, DayOfWeek.Thursday, 6) { Students = class1.Students };
-            var lessonThursday8A1 = new Lesson(teacher7, Subject.Art, DayOfWeek.Thursday, 7) { Students = class1.Students };
-
-            var lessonThursday1A2 = new Lesson(teacher7, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class2.Students };
-            var lessonThursday3A2 = new Lesson(teacher8, Subject.Boxing, DayOfWeek.Thursday, 2) {Students = class2.Students};
-            var lessonThursday4A2 = new Lesson(teacher1, Subject.Math, DayOfWeek.Thursday, 3) { Students = class2.Students };
-            var lessonThursday5A2 = new Lesson(teacher2, Subject.Math, DayOfWeek.Thursday, 4) { Students = class2.Students };
-            var lessonThursday6A2 = new Lesson(teacher3, Subject.Math, DayOfWeek.Thursday, 5) { Students = class2.Students };
-            var lessonThursday7A2 = new Lesson(teacher4, Subject.Math, DayOfWeek.Thursday, 6) { Students = class2.Students };
-
-            var lessonThursday1A3 = new Lesson(teacher4, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class2.Students };
-            var lessonThursday3A3 = new Lesson(teacher3, Subject.Boxing, DayOfWeek.Thursday, 2) { Students = class2.Students };
-            var lessonThursday4A3 = new Lesson(teacher8, Subject.Math, DayOfWeek.Thursday, 3) { Students = class2.Students };
-            var lessonThursday5A3 = new Lesson(teacher7, Subject.Math, DayOfWeek.Thursday, 4) { Students = class2.Students };
-            var lessonThursday6A3 = new Lesson(teacher6, Subject.Math, DayOfWeek.Thursday, 5) { Students = class2.Students };
-            var lessonThursday7A3 = new Lesson(teacher5, Subject.Math, DayOfWeek.Thursday, 6) { Students = class2.Students };
-            var lessonThursday8A3 = new Lesson(teacher2, Subject.Art, DayOfWeek.Thursday, 7) { Students = class2.Students };
+            var lessonThursday1A1 = new Lesson(teacher1.Id, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class1.Students };
+            var lessonThursday3A1 = new Lesson(teacher2.Id, Subject.Boxing, DayOfWeek.Thursday, 2) { Students = class1.Students };
+            var lessonThursday4A1 = new Lesson(teacher3.Id, Subject.Math, DayOfWeek.Thursday, 3) { Students = class1.Students };
+            var lessonThursday5A1 = new Lesson(teacher4.Id, Subject.Math, DayOfWeek.Thursday, 4) { Students = class1.Students };
+            var lessonThursday6A1 = new Lesson(teacher5.Id, Subject.Math, DayOfWeek.Thursday, 5) { Students = class1.Students };
+            var lessonThursday7A1 = new Lesson(teacher6.Id, Subject.Math, DayOfWeek.Thursday, 6) { Students = class1.Students };
+            var lessonThursday8A1 = new Lesson(teacher7.Id, Subject.Art, DayOfWeek.Thursday, 7) { Students = class1.Students };
+                                                       
+            var lessonThursday1A2 = new Lesson(teacher7.Id, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class2.Students };
+            var lessonThursday3A2 = new Lesson(teacher8.Id, Subject.Boxing, DayOfWeek.Thursday, 2) {Students = class2.Students};
+            var lessonThursday4A2 = new Lesson(teacher1.Id, Subject.Math, DayOfWeek.Thursday, 3) { Students = class2.Students };
+            var lessonThursday5A2 = new Lesson(teacher2.Id, Subject.Math, DayOfWeek.Thursday, 4) { Students = class2.Students };
+            var lessonThursday6A2 = new Lesson(teacher3.Id, Subject.Math, DayOfWeek.Thursday, 5) { Students = class2.Students };
+            var lessonThursday7A2 = new Lesson(teacher4.Id, Subject.Math, DayOfWeek.Thursday, 6) { Students = class2.Students };
+                                                       
+            var lessonThursday1A3 = new Lesson(teacher4.Id, Subject.Boxing, DayOfWeek.Thursday, 1) { Students = class2.Students };
+            var lessonThursday3A3 = new Lesson(teacher3.Id, Subject.Boxing, DayOfWeek.Thursday, 2) { Students = class2.Students };
+            var lessonThursday4A3 = new Lesson(teacher8.Id, Subject.Math, DayOfWeek.Thursday, 3) { Students = class2.Students };
+            var lessonThursday5A3 = new Lesson(teacher7.Id, Subject.Math, DayOfWeek.Thursday, 4) { Students = class2.Students };
+            var lessonThursday6A3 = new Lesson(teacher6.Id, Subject.Math, DayOfWeek.Thursday, 5) { Students = class2.Students };
+            var lessonThursday7A3 = new Lesson(teacher5.Id, Subject.Math, DayOfWeek.Thursday, 6) { Students = class2.Students };
+            var lessonThursday8A3 = new Lesson(teacher2.Id, Subject.Art, DayOfWeek.Thursday, 7) { Students = class2.Students };
 
             teacher1.Lessons = new Lesson[]
             {

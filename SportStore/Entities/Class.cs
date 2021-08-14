@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SportStore.Entities
 {
     public class Class : BaseEntity
     {
         public string Name { get; set; }
+        public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
         public IEnumerable<Student> Students { get; set; }
 
@@ -12,10 +14,10 @@ namespace SportStore.Entities
         {
         }
 
-        public Class(string name, Teacher teacher)
+        public Class(string name, Guid teacherId)
         {
             Name = name;
-            Teacher = teacher;
+            TeacherId = teacherId;
             Students = new List<Student>();
         }
     }

@@ -6,6 +6,7 @@ namespace SportStore.Entities
 {
     public class Lesson : BaseEntity
     { 
+        public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
         public IEnumerable<Student> Students { get; set; }
         public Subject Subject { get; set; }
@@ -16,9 +17,9 @@ namespace SportStore.Entities
         {
         }
 
-        public Lesson(Teacher teacher, Subject subject, DayOfWeek day, int hour)
+        public Lesson(Guid teacherId, Subject subject, DayOfWeek day, int hour)
         {
-            Teacher = teacher;
+            TeacherId = teacherId;
             Subject = subject;
             DayOfWeek = day;
             Hour = hour;

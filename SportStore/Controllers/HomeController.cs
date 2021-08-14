@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ namespace SportStore.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName)
+        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName, Guid classId)
         {
             var dbUser = Ctx.People.FirstOrDefault(x => x.IdNumber == username);
             if (dbUser != null)
@@ -72,7 +73,7 @@ namespace SportStore.Controllers
                 return View(new LoginViewModel("המשתמש קיים במערכת"));
             }
 
-            Ctx.Students.Add(new Student(username, firstName, lastName, password));
+            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId));
 
             await Ctx.SaveChangesAsync();
             
