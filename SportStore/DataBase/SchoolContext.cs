@@ -31,18 +31,18 @@ namespace SportStore.DataBase
                 .HasMany(c => c.Students)
                 .WithOne(s => s.Class);
             classBuilder
-                .HasMany(c => c.Lessons)
-                .WithMany(l => l.Classes);
+                .HasOne(c => c.Teacher);
 
             lessonBuilder
-                .HasMany(l => l.Classes)
-                .WithMany(c => c.Lessons);
+                .HasMany(l=> l.Students)
+                .WithMany(s => s.Lessons);
             lessonBuilder
                 .HasOne(l => l.Teacher)
                 .WithMany(t => t.Lessons);
 
             teacherBuilder
-                .HasMany(t => t.Lessons);
+                .HasMany(t => t.Lessons)
+                .WithOne(l => l.Teacher);
 
             var seeder = new SchoolSeed();
             studentBuilder.HasData(seeder.Students);          
