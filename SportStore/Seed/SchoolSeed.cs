@@ -150,54 +150,10 @@ namespace SportStore.Seed
             var lessonThursday7A3 = new Lesson(teacher5.Id, Subject.Math, DayOfWeek.Thursday, 6) { Students = class2.Students };
             var lessonThursday8A3 = new Lesson(teacher2.Id, Subject.Art, DayOfWeek.Thursday, 7) { Students = class2.Students };
 
-            teacher1.Lessons = new Lesson[]
-            {
-                lessonSunday1A1, lessonSunday5A2, lessonSunday7A3, lessonMonday1A1, lessonMonday1A2,
-                lessonTuesday1A1A2A3, lessonTuesday6A2, lessonTuesday4A3, lessonWednesday1A1, lessonThursday1A1,
-                lessonThursday4A2
-            };
-            teacher2.Lessons = new Lesson[]
-            {
-                lessonSunday2A1A2, lessonSunday3A2, lessonSunday1A3, lessonMonday2A1, lessonMonday2A2,
-                lessonMonday1A3, lessonTuesday2A1A2A3, lessonTuesday3A3, lessonWednesday2A1, lessonThursday3A1,
-                lessonThursday5A2, lessonThursday8A3
-            };
-            teacher3.Lessons = new Lesson[]
-            {
-                lessonSunday3A1, lessonSunday4A2, lessonSunday2A3, lessonMonday2A3, lessonTuesday4A2,
-                lessonWednesday3A1, lessonWednesday3A2, lessonWednesday1A3, lessonThursday4A1, lessonThursday6A2,
-                lessonThursday3A3
-            };
-            teacher4.Lessons = new Lesson[]
-            {
-                lessonSunday4A1, lessonSunday3A3, lessonMonday4A1, lessonMonday4A2,
-                lessonMonday3A3, lessonTuesday4A1, lessonTuesday3A2, lessonWednesday4A1, lessonWednesday4A2,
-                lessonWednesday2A3, lessonThursday5A1, lessonThursday7A2, lessonThursday1A3
-            };
-            teacher5.Lessons = new Lesson[]
-            {
-                lessonSunday5A1, lessonSunday1A2, lessonSunday4A3, lessonMonday5A1, lessonTuesday5A1,
-                lessonThursday6A1, lessonThursday7A3
-            };
-            teacher6.Lessons = new Lesson[]
-                {lessonSunday6A1, lessonSunday5A3, lessonTuesday6A1, lessonThursday7A1, lessonThursday6A3};
-            teacher7.Lessons = new Lesson[]
-            {
-                lessonSunday6A3, lessonMonday3A2, lessonMonday4A3, lessonTuesday5A2, lessonTuesday5A3,
-                lessonWednesday1A2,
-                lessonWednesday3A3, lessonThursday8A1, lessonThursday1A2, lessonThursday5A3,
-            };
-            teacher8.Lessons = new Lesson[]
-            {
-                lessonMonday3A1, lessonTuesday3A1, lessonTuesday6A3, lessonWednesday2A2, lessonWednesday4A3,
-                lessonThursday3A2, lessonThursday4A3
-            };
-
-
             Teachers = new Teacher[] {teacher1, teacher2, teacher3, teacher4, teacher5, teacher6, teacher7, teacher8};
             Students = new Student[]
             {
-                student1, student2, student4, student4, student5, student6, student7, student8,
+                student1, student2, student3, student4, student5, student6, student7, student8,
                 student9, student10, student11, student12, student13, student14, student15, student16, student17,
                 student18, student19, student20
             };

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.DataBase;
-using SportStore.Entities;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace SportStore.Controllers
 {
@@ -19,7 +18,11 @@ namespace SportStore.Controllers
 
         public IActionResult Index()
         {
-            return View(new List<Lesson>());
+            var lessons = _ctx.Lessons
+                .AsQueryable()
+                .Where(x => x.Students.Any(y => y.IdNumber == User.Identity.Name));
+              
+            return View(lessons);
         }
     }
 }

@@ -30,7 +30,10 @@ namespace SportStore
                 });
 
             services.AddControllersWithViews();            
-            services.AddDbContext<SchoolContext>(opt => opt.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString)));
+            services.AddDbContext<SchoolContext>(opt => {
+                opt.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
+                   .EnableSensitiveDataLogging();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
