@@ -20,8 +20,10 @@ namespace SportStore.Controllers
         {
             var lessons = _ctx.Lessons
                 .AsQueryable()
-                .Where(x => x.Students.Any(y => y.IdNumber == User.Identity.Name));
-              
+                .Where(x => x.Students.Any(y => y.IdNumber == User.Identity.Name))
+                .GroupBy(x => x.Hour)
+                .ToDictionary(x => x.Key, y => y.ToList());
+
             return View(lessons);
         }
     }

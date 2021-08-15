@@ -1,11 +1,4 @@
-﻿@model IEnumerable<SportStore.Entities.Lesson>
-
-@{
-    ViewData["Title"] = "Schedule";
-    var lessons = Model
-        .GroupBy(x => x.Hour)
-        .ToDictionary(x => x.Key, y => y.ToList());
-}
+﻿@model Dictionary<int, List<SportStore.Entities.Lesson>>
 
 <table class="table table-bordered schedule-table">
     <thead>
@@ -20,12 +13,12 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var hour in lessons.Keys)
+    @foreach (var hour in Model.Keys)
     {
         var nextHour = hour + 1;
         <tr>
             <td>@nextHour:00 - @hour:00</td>
-            @foreach (var lesson in lessons[hour].OrderBy(x => x.DayOfWeek))
+            @foreach (var lesson in Model[hour].OrderBy(x => x.DayOfWeek))
             {
                 <td>@lesson.Subject</td>
             }
