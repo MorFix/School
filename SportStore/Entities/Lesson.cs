@@ -8,7 +8,7 @@ namespace SportStore.Entities
     { 
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
-        public IEnumerable<Student> Students { get; set; }
+        public virtual IEnumerable<Student> Students { get; set; }
         public Subject Subject { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
         public int Hour { get; set; }

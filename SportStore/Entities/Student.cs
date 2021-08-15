@@ -7,7 +7,7 @@ namespace SportStore.Entities
     {
         public Guid ClassId { get; set; }
         public Class Class { get; set; }
-        public List<Lesson> Lessons { get; set; }
+        public virtual IEnumerable<Lesson> Lessons { get; set; }
 
         public Student()
         {
