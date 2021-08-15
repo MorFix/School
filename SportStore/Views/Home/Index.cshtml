@@ -1,5 +1,56 @@
 ﻿@{ ViewData["Title"] = "Home Page"; }
 
+<script>
+    $(document).ready(function () {
+        getLocation();
+    })
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(getWeather)
+        }
+    }
+
+    function getWeather(userPosition, task) {
+        $.ajax({
+            url: 'https://api.openweathermap.org/data/2.5/weather',
+            data: {
+                lat: userPosition.coords.latitude,
+                lon: userPosition.coords.longitude,
+                units: 'metric',
+                APPID: 'e5ed663b00379c266bb4dc85f4fc4055'
+            },
+            success: function (res) { showWeatherDetails(res, task) }
+        })
+    }
+
+    function showWeatherDetails(weather, task) {
+        var temp = parseInt(weather.main.temp, 10);
+        $('#weather_degrees').html(temp);
+        $('#weather_img').attr('src', 'https://openweathermap.org/img/w/' + weather.weather[0].icon + '.png');
+        $('#clothes_recommendation').html(getClothesRecommendation(temp))
+        //$('.weather_container').css('visibility', 'visible');
+    }
+
+    function getClothesRecommendation(temp) {
+        if (temp < 20) {
+            return 'קצר';
+        }
+
+        return 'ארוך';
+    }
+
+</script>
+
+
 <div class="text-center">
     <h1>Home page</h1>
+</div>
+<div style="display: flex; align-items: center;">
+    <img id='weather_img' style="height: 70px"/>
+    <div style="display: flex">
+        <div>מזג האוויר היום הוא:&nbsp;</div>
+        <div class='degrees_sign'>C°</div><div id='weather_degrees' class='degrees'></div>
+        <div>&nbsp;על כן המלצתנו היום היא ללבוש:&nbsp;</div><div id="clothes_recommendation"></div>
+    </div>
 </div>
