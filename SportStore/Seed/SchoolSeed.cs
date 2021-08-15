@@ -12,6 +12,7 @@ namespace SportStore.Seed
         public IEnumerable<Class> Classes { get; set; } = new List<Class>();
         public IEnumerable<Lesson> Lessons { get; set; } = new List<Lesson>();
         public IEnumerable<Student> Students { get; set; } = new List<Student>();
+        public IEnumerable<StudentLesson> StudentsLessons { get; set; } = new List<StudentLesson>();
 
         public SchoolSeed()
         {
@@ -237,6 +238,48 @@ namespace SportStore.Seed
                 lessonThursday7A3,
                 lessonThursday8A3
             };
+
+            var class1Lessons = new[]
+            {
+                lessonSunday1A1, lessonSunday2A1A2, lessonSunday3A1, lessonSunday4A1, lessonSunday5A1, lessonSunday6A1,
+                lessonMonday1A1, lessonMonday2A1, lessonMonday3A1, lessonMonday4A1, lessonMonday5A1,
+                lessonTuesday1A1A2A3, lessonTuesday2A1A2A3, lessonTuesday3A1, lessonTuesday4A1, lessonTuesday5A1, lessonTuesday6A1,
+                lessonWednesday1A1, lessonWednesday2A1, lessonWednesday3A1, lessonWednesday4A1,
+                lessonThursday1A1, lessonThursday3A1, lessonThursday4A1, lessonThursday5A1, lessonThursday6A1
+            };
+
+            var class2Lessons = new[]
+            {
+                lessonSunday1A2, lessonSunday2A1A2, lessonSunday3A2, lessonSunday4A2, lessonSunday5A2,
+                lessonMonday1A2, lessonMonday2A2, lessonMonday3A2, lessonMonday4A2,
+                lessonTuesday1A1A2A3, lessonTuesday2A1A2A3, lessonTuesday3A2, lessonTuesday4A2, lessonTuesday5A2, lessonTuesday6A2,
+                lessonWednesday1A2, lessonWednesday2A2, lessonWednesday3A2, lessonWednesday4A2,
+                lessonThursday1A2, lessonThursday3A2, lessonThursday4A2, lessonThursday5A2, lessonThursday6A2
+            };
+
+            var class3Lessons = new[]
+            {
+                lessonSunday1A3, lessonSunday2A3, lessonSunday3A3, lessonSunday4A3, lessonSunday5A3,
+                lessonMonday1A3, lessonMonday2A3, lessonMonday3A3, lessonMonday4A3,
+                lessonTuesday1A1A2A3, lessonTuesday2A1A2A3, lessonTuesday3A3, lessonTuesday4A3, lessonTuesday5A3, lessonTuesday6A3,
+                lessonWednesday1A3, lessonWednesday2A3, lessonWednesday3A3, lessonWednesday4A3,
+                lessonThursday1A3, lessonThursday3A3, lessonThursday4A3, lessonThursday5A3, lessonThursday6A3
+            };
+
+            var class1Students = Students.Where(x => x.ClassId == class1.Id);
+            var class2Students = Students.Where(x => x.ClassId == class2.Id);
+            var class3Students = Students.Where(x => x.ClassId == class3.Id);
+
+            StudentsLessons = GetStudentsLessons(class1Students, class1Lessons)
+                .Concat(GetStudentsLessons(class2Students, class2Lessons))
+                .Concat(GetStudentsLessons(class3Students, class3Lessons));
+        }
+
+        private IEnumerable<StudentLesson> GetStudentsLessons(IEnumerable<Student> students, IEnumerable<Lesson> classLessons)
+
+        {
+            return students.SelectMany(student =>
+                classLessons.Select(lesson => new StudentLesson(student.Id, lesson.Id)));
         }
     }
 }
