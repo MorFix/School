@@ -6,11 +6,12 @@ namespace SportStore.DataBase
 {
     public class SchoolContext : DbContext
     {
-        public DbSet<Person> People { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {
@@ -22,10 +23,12 @@ namespace SportStore.DataBase
             var teacherBuilder = modelBuilder.Entity<Teacher>();
             var lessonBuilder = modelBuilder.Entity<Lesson>();
             var classBuilder = modelBuilder.Entity<Class>();
+            var roomBuilder = modelBuilder.Entity<Room>();
 
             var seeder = new SchoolSeed();
             studentBuilder.HasData(seeder.Students);
             teacherBuilder.HasData(seeder.Teachers);
+            roomBuilder.HasData(seeder.Rooms);
             lessonBuilder.HasData(seeder.Lessons);
             classBuilder.HasData(seeder.Classes);
 
@@ -38,6 +41,8 @@ namespace SportStore.DataBase
                 .WithOne(s => s.Class);
             classBuilder
                 .HasOne(c => c.Teacher);
+            classBuilder
+                .HasOne(c => c.Room);
 
             lessonBuilder
                 .HasMany(l=> l.Students)
@@ -47,7 +52,9 @@ namespace SportStore.DataBase
             lessonBuilder
                 .HasOne(l => l.Teacher)
                 .WithMany(t => t.Lessons);
-                
+
+            lessonBuilder
+                .HasOne(l => l.Room);
 
             teacherBuilder
                 .HasMany(t => t.Lessons)

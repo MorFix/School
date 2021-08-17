@@ -39,7 +39,7 @@ namespace SportStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
-            var dbUser = Ctx.People.FirstOrDefault(x => x.IdNumber == username && x.Password == password);
+            var dbUser = Ctx.Users.FirstOrDefault(x => x.IdNumber == username && x.Password == password);
             if (dbUser == null)
             {
                 return View(new LoginViewModel("הפרטים אינם נכונים"));
@@ -67,7 +67,7 @@ namespace SportStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string username, string password, string firstName, string lastName, Guid classId)
         {
-            var dbUser = Ctx.People.FirstOrDefault(x => x.IdNumber == username);
+            var dbUser = Ctx.Users.FirstOrDefault(x => x.IdNumber == username);
             if (dbUser != null)
             {
                 return View(new LoginViewModel("המשתמש קיים במערכת"));

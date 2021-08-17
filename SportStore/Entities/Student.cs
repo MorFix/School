@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SportStore.Entities
 {
-    public class Student : Person
+    public class Student : User
     {
         public Guid ClassId { get; set; }
         public Class Class { get; set; }

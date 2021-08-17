@@ -2,7 +2,7 @@
 
 namespace SportStore.Entities
 {
-    public class Teacher : Person
+    public class Teacher : User
     {
         public IEnumerable<Lesson> Lessons { get; set; }
         

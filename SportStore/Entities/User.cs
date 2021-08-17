@@ -1,17 +1,17 @@
 ﻿namespace SportStore.Entities
 {
-    public abstract class Person : BaseEntity
+    public abstract class User : BaseEntity
     {
         public string IdNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
 
-        protected Person()
+        protected User()
         {
         }
 
-        protected Person(string idNumber, string firstName, string lastName, string password)
+        protected User(string idNumber, string firstName, string lastName, string password)
         {
             IdNumber = idNumber;
             FirstName = firstName;
