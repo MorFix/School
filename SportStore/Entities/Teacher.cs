@@ -10,8 +10,8 @@ namespace SportStore.Entities
         {
         }
 
-        public Teacher(string idNumber, string firstName, string lastName, string password) : 
-            base(idNumber, firstName, lastName, password)
+        public Teacher(string idNumber, string firstName, string lastName, string password, Point address) : 
+            base(idNumber, firstName, lastName, password, address)
         {
             Lessons = new List<Lesson>();
         }
