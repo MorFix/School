@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportStore.Controllers.Security;
 using SportStore.DataBase;
 
 namespace SportStore
@@ -29,7 +30,12 @@ namespace SportStore
                     options.LoginPath = "/Home/Login";
                 });
 
-            services.AddControllersWithViews();            
+            services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add<PermissionsFilter>();
+                });            
+
             services.AddDbContext<SchoolContext>(opt => {
                 opt.UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
                    .EnableSensitiveDataLogging();

@@ -59,7 +59,7 @@ namespace SportStore.Controllers
                 new (ClaimTypes.Name, dbUser.IdNumber)
             };
 
-            var claimsIdentity = new ClaimsIdentity(claims, "Login");
+            var claimsIdentity = new SchoolClaimsIdentity(dbUser);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
