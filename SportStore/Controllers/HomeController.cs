@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.DataBase;
 using SportStore.Entities;
-using SportStore.Models;
+using SportStore.ViewModels;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,16 @@ namespace SportStore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var user = Ctx.Users.FirstOrDefault(x => x.IdNumber == User.Identity.Name);
+            
+            if (user != null)
+            {
+                var address = new Point(user.AddressX, user.AddressY);
+                
+                return View(address);
+            }
+
+            return Redirect("/Register");
         }
 
         [AllowAnonymous]
@@ -65,7 +74,7 @@ namespace SportStore.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName, Guid classId)
+        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName, Guid classId, Point address)
         {
             var dbUser = Ctx.Users.FirstOrDefault(x => x.IdNumber == username);
             if (dbUser != null)
@@ -73,7 +82,7 @@ namespace SportStore.Controllers
                 return View(new LoginViewModel("המשתמש קיים במערכת"));
             }
 
-            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId));
+            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId, address));
 
             await Ctx.SaveChangesAsync();
             
