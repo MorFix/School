@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SportStore.Enums;
 
 namespace SportStore.Entities
 {
@@ -11,7 +12,7 @@ namespace SportStore.Entities
         }
 
         public Teacher(string idNumber, string firstName, string lastName, string password, Point address) : 
-            base(idNumber, firstName, lastName, password, address)
+            base(idNumber, firstName, lastName, password, address, PermissionsLevel.Manage)
         {
             Lessons = new List<Lesson>();
         }

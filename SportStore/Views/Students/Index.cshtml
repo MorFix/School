@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SportStore.Entities.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<table class="table table-bordered center-table">
+    <thead>
+        <tr>
+            <td>שם</td>
+            <td>התנהגות</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.FirstName @student.LastName</td>
+                <td>@student.Behavior</td>
+            </tr>
+        }
+    </tbody>
+</table>

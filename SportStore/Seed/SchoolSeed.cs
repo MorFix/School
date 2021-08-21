@@ -44,26 +44,26 @@ namespace SportStore.Seed
             var class2 = new Class("A2", ClassLevel.First, teacher2.Id, room2.Id);
             var class3 = new Class("A3", ClassLevel.First, teacher3.Id, room3.Id);
 
-            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id, new Point(31.967868, 34.725675));
-            var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, new Point(31.912319, 34.7723565));
-            var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id, new Point(31.96525329, 34.14534775));
-            var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id, new Point(31.922529, 34.5757775));
-            var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id, new Point(31.935253259, 34.72342356875));
+            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id, new Point(31.967868, 34.725675), behavior: "טובה מאוד");
+            var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, new Point(31.912319, 34.7723565), behavior: "טובה מאוד");
+            var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id, new Point(31.96525329, 34.14534775), behavior: "טובה מאוד");
+            var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id, new Point(31.922529, 34.5757775), behavior: "ככה ככה, מפריע");
+            var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id, new Point(31.935253259, 34.72342356875), behavior: "טובה");
             var student6 = new Student("325142444", "Amit", "Hachmon", "1234", class1.Id, new Point(31.9623539, 34.7124575));
             var student7 = new Student("318273625", "Dana", "Erez", "1234", class1.Id, new Point(31.5235, 34.713524675));
-            var student8 = new Student("324152614", "May", "Menash", "1234", class2.Id, new Point(31.9235235, 34.7665775));
-            var student9 = new Student("211234561", "Maya", "Menash", "1234", class2.Id, new Point(31.96232, 34.723475));
-            var student10 = new Student("211234561", "Rahav", "Menash", "1234", class2.Id, new Point(31.96123123, 34.235775));
-            var student11 = new Student("211234561", "Ori", "Menash", "1234", class2.Id, new Point(31.36456, 34.644775));
+            var student8 = new Student("324152614", "May", "Menash", "1234", class2.Id, new Point(31.9235235, 34.7665775), behavior: "טובה");
+            var student9 = new Student("211234561", "Maya", "Menash", "1234", class2.Id, new Point(31.96232, 34.723475), behavior: "טובה");
+            var student10 = new Student("211234561", "Rahav", "Menash", "1234", class2.Id, new Point(31.96123123, 34.235775), behavior: "טובה");
+            var student11 = new Student("211234561", "Ori", "Menash", "1234", class2.Id, new Point(31.36456, 34.644775), behavior: "טובה");
             var student12 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, new Point(31.9619401, 34.236757775));
-            var student13 = new Student("211234561", "Michal", "Menash", "1234", class2.Id, new Point(31.969020340, 34.7267475));
-            var student14 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, new Point(31.9691563, 34.7325234675));
+            var student13 = new Student("211234561", "Michal", "Menash", "1234", class2.Id, new Point(31.969020340, 34.7267475), behavior: "ככה ככה, מפריע");
+            var student14 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, new Point(31.9691563, 34.7325234675), behavior: "ככה ככה, מפריע");
             var student15 = new Student("311234561", "Avi", "Menash", "1234", class3.Id, new Point(31.969346456, 34.235775));
             var student16 = new Student("223234561", "Omer", "Menash", "1234", class3.Id, new Point(31.96923502, 34.6436357775));
             var student17 = new Student("215243222", "Tal", "Menash", "1234", class3.Id, new Point(31.9655759, 34.4664775));
             var student18 = new Student("231144562", "Noa", "Menash", "1234", class3.Id, new Point(31.9234269, 34.2356775));
-            var student19 = new Student("311278522", "Yael`", "Menash", "1234", class3.Id, new Point(31.962253364579, 34.2352775));
-            var student20 = new Student("266254190", "Lior", "Menash", "1234", class3.Id, new Point(31.925269, 34.153275));
+            var student19 = new Student("311278522", "Yael`", "Menash", "1234", class3.Id, new Point(31.962253364579, 34.2352775), behavior: "טובה מאוד");
+            var student20 = new Student("266254190", "Lior", "Menash", "1234", class3.Id, new Point(31.925269, 34.153275), behavior: "טובה מאוד");
 
             // Sunday
             var lessonSunday1A1 = new Lesson(teacher1.Id, room1.Id, Subject.Art, DayOfWeek.Sunday, 1) {Students = class1.Students};

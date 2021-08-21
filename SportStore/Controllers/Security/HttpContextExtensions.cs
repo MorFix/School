@@ -7,7 +7,9 @@ namespace SportStore.Controllers.Security
     {
         public static User GetSchoolUser(this HttpContext context)
         {
-            return (context.User.Identity as SchoolClaimsIdentity)?.User;
+            context.Items.TryGetValue("user", out var user);
+
+            return user as User;
         }
     }
 }

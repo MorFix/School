@@ -16,7 +16,7 @@ namespace SportStore.Entities
         {
         }
 
-        protected User(string idNumber, string firstName, string lastName, string password, Point address, PermissionsLevel permissions = PermissionsLevel.Watch)
+        protected User(string idNumber, string firstName, string lastName, string password, Point address, PermissionsLevel permissions)
         {
             IdNumber = idNumber;
             FirstName = firstName;

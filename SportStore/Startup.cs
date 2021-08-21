@@ -75,6 +75,8 @@ namespace SportStore
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<AuthMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

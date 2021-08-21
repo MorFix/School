@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = Context.GetSchoolUser();
+}
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="utf-8" />
@@ -19,12 +22,12 @@
             });
         };
 
-        const openShareDialog = () => {
+        window.openShareDialog = () => {
             FB.ui({
                 method: 'share',
-                href: 'https://developers.facebook.com/docs/',
-                hashtag: '#u_market',
-                quote: `hiiiii`
+                href: "https://school.com",
+                hashtag: '#timoti',
+                quote: `Come visit our school site!`
             });
         }
     </script>
@@ -53,11 +56,22 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">כיתות השכבה</a>
                             </li>
                             <li class="nav-item">
-                                <button onclick="openShareDialog()"></button>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
                             </li>
+                            @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
+                                </li> 
+                            }
+                            <li class="nav-item">
+                                <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">
+                                    <img src="https://facebook.com/favicon.ico" alt="" />
+                                </button>
+                            </li>
+                            
                             <li class="flex-grow-1" />
                             <li class="nav-item">
-                                <span class="nav-link text-dark" style="font-weight: bold">שלום @User.Identity.Name</span>
+                                <span class="nav-link text-dark" style="font-weight: bold">שלום @user?.FirstName</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">יציאה</a>

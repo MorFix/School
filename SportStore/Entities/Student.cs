@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SportStore.Enums;
 
 namespace SportStore.Entities
 {
@@ -8,16 +9,18 @@ namespace SportStore.Entities
         public Guid ClassId { get; set; }
         public Class Class { get; set; }
         public virtual IEnumerable<Lesson> Lessons { get; set; }
+        public string Behavior { get; set; }
 
         public Student()
         {
         }
 
-        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, Point address)
-            : base(idNumber, firstName, lastName, password, address)
+        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, Point address,
+            PermissionsLevel permissions = PermissionsLevel.Watch, string behavior = "") : base(idNumber, firstName, lastName, password, address, permissions)
         {
             Lessons = new List<Lesson>();
             ClassId = classId;
+            Behavior = behavior;
         }
     }
 }

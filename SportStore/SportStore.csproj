@@ -13,8 +13,10 @@
 
   <ItemGroup>
     <None Remove="Controllers\Security\" />
+    <None Remove="Views\Schedule %28copy%29\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Security\" />
+    <Folder Include="Views\Schedule %28copy%29\" />
   </ItemGroup>
 </Project>
