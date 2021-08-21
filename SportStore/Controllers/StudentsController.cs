@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using SportStore.Controllers.Security;
 using SportStore.Enums;
+using System.Threading.Tasks;
 
 namespace SportStore.Controllers
 {
@@ -24,6 +25,22 @@ namespace SportStore.Controllers
             var students = _ctx.Students.ToList();
               
             return View(students);
+        }
+
+        [Permissions(PermissionsLevel.Manage)]
+        [HttpPut]
+        public async Task<IActionResult> UpdateBehavior(string student, string behavior)
+        {
+            var dbstudent = _ctx.Students.FirstOrDefault(x => x.IdNumber == student);
+            if (dbstudent == null) {
+                return NotFound();
+            }
+
+            dbstudent.Behavior = behavior;
+            _ctx.Update(dbstudent);
+            await _ctx.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

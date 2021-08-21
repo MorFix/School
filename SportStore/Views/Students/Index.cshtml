@@ -4,6 +4,19 @@
     ViewData["Title"] = "Students";
 }
 
+<script>
+    function saveBehavior(student) {
+        const value = document.getElementById(`behavior-student-${student}`).value;
+
+        $.ajax({
+            url: `/students/?student=${student}&behavior=${value}`,
+            method: 'PUT',
+            success: function () { alert('השמירה בוצעה') },
+            error: function () { alert('השמירה נכשלה') }
+        })
+    }
+</script>
+
 <table class="table table-bordered center-table">
     <thead>
         <tr>
@@ -16,7 +29,10 @@
         {
             <tr>
                 <td>@student.FirstName @student.LastName</td>
-                <td>@student.Behavior</td>
+                <td>
+                    <input id="behavior-student-@student.IdNumber" type="text" placeholder="התנהגות" value="@student.Behavior" />
+                    <a href="#" onclick="saveBehavior(@student.IdNumber)">שמור‎</a>
+                </td>
             </tr>
         }
     </tbody>
