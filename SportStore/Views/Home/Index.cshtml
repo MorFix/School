@@ -7,7 +7,7 @@
 }
 
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOydsh7j2ZAwU5XDSyh7p5sxCvoIyaB5s&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDasA7_C8s-T2dAXutOSqVBiCAsz3zJ3zo&callback=initMap">
 </script>
 <script>
     $(document).ready(function () {
@@ -92,5 +92,27 @@
             label: "School",
             map: map
          });
+
+        // get route from A to B
+         calculateAndDisplayRoute(map, userAddress, school);
+    }
+
+    function calculateAndDisplayRoute(map, pointA, pointB) {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer({ map: map, suppressMarkers: true });
+
+        directionsService.route({
+            origin: pointA,
+            destination: pointB,
+            avoidTolls: true,
+            avoidHighways: false,
+            travelMode: google.maps.TravelMode.WALKING
+        }, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
     }
 </script>
