@@ -1,0 +1,75 @@
+{
+    "id": "snwMkr8BriJMBoUNxXHV",
+    "name": "Lidor",
+    "content": [
+        {
+            "type": "text",
+            "text": "this is an explantion"
+        },
+        {
+            "type": "snippet",
+            "lines": [
+                " {",
+                "     public static class HttpContextExtensions",
+                "     {",
+                "*        public static User GetSchoolUser(this HttpContext context)",
+                "*        {",
+                "*            return (context.User.Identity as SchoolClaimsIdentity)?.User;",
+                "*        }",
+                "     }",
+                " }",
+                " "
+            ],
+            "firstLineNumber": 5,
+            "path": "SportStore/Controllers/Security/HttpContextExtensions.cs",
+            "comments": [
+                "asdasdas\n\n[[sym:./SportStore/Controllers/Security/SchoolClaimsIdentity.cs(44d6e290-b928-41d1-8624-daeee7724c16)]]\n\n[[sym-text:GetSchoolUser(37503f4c-50c7-46bd-944c-e4b0378cdc16)]]"
+            ]
+        },
+        {
+            "type": "snippet",
+            "lines": [
+                "         public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)",
+                "         {",
+                "             var attribute = context.ActionDescriptor.EndpointMetadata.OfType<PermissionsAttribute>().FirstOrDefault();",
+                "*            if (attribute == null)",
+                "             {",
+                "                 return next();",
+                "             }"
+            ],
+            "firstLineNumber": 15,
+            "path": "SportStore/Controllers/Security/PermissionsFilter.cs",
+            "comments": [
+                "asas"
+            ]
+        }
+    ],
+    "symbols": {
+        "44d6e290-b928-41d1-8624-daeee7724c16": {
+            "type": "path",
+            "text": "SportStore/Controllers/Security/SchoolClaimsIdentity.cs",
+            "path": "SportStore/Controllers/Security/SchoolClaimsIdentity.cs"
+        },
+        "37503f4c-50c7-46bd-944c-e4b0378cdc16": {
+            "symbol": "37503f4c-50c7-46bd-944c-e4b0378cdc16",
+            "path": "SportStore/Controllers/Security/HttpContextExtensions.cs",
+            "text": "GetSchoolUser",
+            "lineNumber": 8,
+            "lineData": "        public static User GetSchoolUser(this HttpContext context)",
+            "wordIndex": {
+                "start": 7,
+                "end": 7
+            },
+            "fileBlob": "99ed6e313223a96217752e0500e7cb6855986b99",
+            "type": "generic_text"
+        }
+    },
+    "file_version": "2.0.3",
+    "meta": {
+        "app_version": "0.5.6-0",
+        "file_blobs": {
+            "SportStore/Controllers/Security/HttpContextExtensions.cs": "99ed6e313223a96217752e0500e7cb6855986b99",
+            "SportStore/Controllers/Security/PermissionsFilter.cs": "26042a14357f45a3aa58abdb51c6ca21548c79d0"
+        }
+    }
+}

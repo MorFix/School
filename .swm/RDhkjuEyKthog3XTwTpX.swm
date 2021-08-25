@@ -1,0 +1,73 @@
+{
+    "id": "RDhkjuEyKthog3XTwTpX",
+    "name": "Itai test",
+    "content": [
+        {
+            "type": "text",
+            "text": "sdsdgsdg"
+        },
+        {
+            "type": "snippet",
+            "lines": [
+                "         public DbSet<Lesson> Lessons { get; set; }",
+                "         public DbSet<Room> Rooms { get; set; }",
+                " ",
+                "*        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)",
+                "*        {",
+                "*        }",
+                "*",
+                "*        protected override void OnModelCreating(ModelBuilder modelBuilder)",
+                "*        {",
+                "*            var studentBuilder = modelBuilder.Entity<Student>();",
+                "             var teacherBuilder = modelBuilder.Entity<Teacher>();",
+                "             var lessonBuilder = modelBuilder.Entity<Lesson>();",
+                "             var classBuilder = modelBuilder.Entity<Class>();"
+            ],
+            "firstLineNumber": 13,
+            "path": "SportStore/DataBase/SchoolContext.cs",
+            "comments": [
+                "ergerg wfeee [[sym:./SportStore/Entities/Class.cs(991c317f-a8c7-49ed-9f24-8d6be8f5ceac)]]\n\n[[sym-text:SchoolContext(d219debc-7b6e-41da-8648-1f45ab846567)]]\n\n[[sym-text:studentBuilder(05ed3c05-3011-4a0f-bb04-196fe962de75)]]"
+            ]
+        }
+    ],
+    "symbols": {
+        "991c317f-a8c7-49ed-9f24-8d6be8f5ceac": {
+            "type": "path",
+            "text": "SportStore/Entities/Class.cs",
+            "path": "SportStore/Entities/Class.cs"
+        },
+        "d219debc-7b6e-41da-8648-1f45ab846567": {
+            "symbol": "d219debc-7b6e-41da-8648-1f45ab846567",
+            "path": "SportStore/DataBase/SchoolContext.cs",
+            "text": "SchoolContext",
+            "lineNumber": 16,
+            "lineData": "        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)",
+            "wordIndex": {
+                "start": 3,
+                "end": 3
+            },
+            "fileBlob": "43acbc9862ad3dd35d111df19b03d8907a84bc2a",
+            "type": "generic_text"
+        },
+        "05ed3c05-3011-4a0f-bb04-196fe962de75": {
+            "symbol": "05ed3c05-3011-4a0f-bb04-196fe962de75",
+            "path": "SportStore/DataBase/SchoolContext.cs",
+            "text": "studentBuilder",
+            "lineNumber": 22,
+            "lineData": "            var studentBuilder = modelBuilder.Entity<Student>();",
+            "wordIndex": {
+                "start": 3,
+                "end": 3
+            },
+            "fileBlob": "43acbc9862ad3dd35d111df19b03d8907a84bc2a",
+            "type": "generic_text"
+        }
+    },
+    "file_version": "2.0.3",
+    "meta": {
+        "app_version": "0.5.6-0",
+        "file_blobs": {
+            "SportStore/DataBase/SchoolContext.cs": "43acbc9862ad3dd35d111df19b03d8907a84bc2a"
+        }
+    }
+}
