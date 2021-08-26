@@ -82,7 +82,7 @@ namespace SportStore.Controllers
                 return View(new LoginViewModel("המשתמש קיים במערכת"));
             }
 
-            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId, address));
+            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId, address, Guid.NewGuid()));
 
             await Ctx.SaveChangesAsync();
             

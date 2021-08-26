@@ -15,8 +15,8 @@ namespace SportStore.Entities
         {
         }
 
-        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, Point address,
-            PermissionsLevel permissions = PermissionsLevel.Watch, string behavior = "") : base(idNumber, firstName, lastName, password, address, permissions)
+        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, Point address, Guid id,
+            PermissionsLevel permissions = PermissionsLevel.Watch, string behavior = "") : base(idNumber, firstName, lastName, password, address, permissions, id)
         {
             Lessons = new List<Lesson>();
             ClassId = classId;

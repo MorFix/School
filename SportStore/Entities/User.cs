@@ -1,4 +1,5 @@
-﻿using SportStore.Enums;
+﻿using System;
+using SportStore.Enums;
 
 namespace SportStore.Entities
 {
@@ -16,7 +17,7 @@ namespace SportStore.Entities
         {
         }
 
-        protected User(string idNumber, string firstName, string lastName, string password, Point address, PermissionsLevel permissions)
+        protected User(string idNumber, string firstName, string lastName, string password, Point address, PermissionsLevel permissions, Guid id) : base(id)
         {
             IdNumber = idNumber;
             FirstName = firstName;

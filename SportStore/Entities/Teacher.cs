@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SportStore.Enums;
 
 namespace SportStore.Entities
@@ -11,8 +12,8 @@ namespace SportStore.Entities
         {
         }
 
-        public Teacher(string idNumber, string firstName, string lastName, string password, Point address) : 
-            base(idNumber, firstName, lastName, password, address, PermissionsLevel.Manage)
+        public Teacher(string idNumber, string firstName, string lastName, string password, Point address, Guid id) : 
+            base(idNumber, firstName, lastName, password, address, PermissionsLevel.Manage, id)
         {
             Lessons = new List<Lesson>();
         }

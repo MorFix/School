@@ -19,7 +19,7 @@ namespace SportStore.Entities
         {
         }
 
-        public Lesson(Guid teacherId, Guid roomdId, Subject subject, DayOfWeek day, int hour)
+        public Lesson(Guid teacherId, Guid roomdId, Subject subject, DayOfWeek day, int hour, Guid id) : base(id)
         {
             TeacherId = teacherId;
             RoomId = roomdId;

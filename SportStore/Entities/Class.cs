@@ -21,7 +21,7 @@ namespace SportStore.Entities
         {
         }
 
-        public Class(string name, ClassLevel level, Guid teacherId, Guid roomId)
+        public Class(string name, ClassLevel level, Guid teacherId, Guid roomId, Guid id) : base(id)
         {
             Name = name;
             Level = level;

@@ -58,17 +58,26 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
                             </li>
-                            @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage) {
+                            @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage)
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
-                                </li> 
+                                </li>
+
+                            }
+                            @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Lessons" asp-action="Index">שיעורים</a>
+                                </li>
+
                             }
                             <li class="nav-item">
                                 <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">
                                     <img src="https://facebook.com/favicon.ico" alt="" />
                                 </button>
                             </li>
-                            
+
                             <li class="flex-grow-1" />
                             <li class="nav-item">
                                 <span class="nav-link text-dark" style="font-weight: bold">שלום @user?.FirstName</span>

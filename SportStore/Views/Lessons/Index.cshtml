@@ -1,0 +1,82 @@
+﻿@using SportStore.Enums
+@model LessonViewModel
+@{
+    ViewData["Title"] = "Lessons";
+}
+
+<script>
+    function update(lessonId) {
+        const subject = document.getElementById(`subject-${lessonId}`).value;
+        const day = document.getElementById(`day-${lessonId}`).value;
+        const hour = document.getElementById(`hour-${lessonId}`).value;
+        const teacher = document.getElementById(`teacher-${lessonId}`).value;
+
+        $.ajax({
+            url: `/lessons/?lessonId=${lessonId}&subject=${subject}&day=${day}&hour=${hour}&teacher=${teacher}`,
+            method: 'PUT',
+            success: function() { alert('השמירה בוצעה') },
+            error: function() { alert('השמירה נכשלה') }
+        });
+    }
+</script>
+
+<table class="table table-bordered center-table">
+    <thead>
+    <tr>
+        <th>נושא</th>
+        <th>יום</th>
+        <th>שעה</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var lesson in Model.Lessons)
+    {
+        <tr>
+            <td>
+                <label for="subject">נושא</label>
+
+                <select name="subject" id="subject-@lesson.Id">
+                    <option value="@Subject.Art">Art</option>
+                    <option value="@Subject.Boxing">Boxing</option>
+                    <option value="@Subject.Economics">Economics</option>
+                    <option value="@Subject.English">English</option>
+                    <option value="@Subject.Math">Math</option>
+                    <option value="@Subject.Music">Music</option>
+                    <option value="@Subject.Spanish">Spanish</option>
+
+                </select>
+            </td>
+            <td>
+                <label for="dayOfWeek">יום</label>
+
+                <select name="dayOfWeek" id="day-@lesson.Id">
+                    <option value="@DayOfWeek.Sunday">Sunday</option>
+                    <option value="@DayOfWeek.Monday">Monday</option>
+                    <option value="@DayOfWeek.Tuesday">Tuesday</option>
+                    <option value="@DayOfWeek.Wednesday">Wednesday</option>
+                    <option value="@DayOfWeek.Thursday">Thursday</option>
+                    <option value="@DayOfWeek.Friday">Friday</option>
+                    <option value="@DayOfWeek.Saturday">Saturday</option>
+
+                </select>
+            </td>
+            <td>
+                <input id="hour-@lesson.Id" type="number" placeholder="שעה" value="@lesson.Hour" />
+            </td>
+            <td>
+                <label for="teachers">מורה</label>
+
+                <select name="teachers" id="teacher-@lesson.Id">
+                    @foreach (var teacher in Model.Teachers)
+                    {
+                        <option value="@teacher.Id">@teacher.FirstName @teacher.LastName</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <button onclick="update('@lesson.Id')">שמור‎</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
