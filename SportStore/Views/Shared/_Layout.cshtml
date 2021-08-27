@@ -55,9 +55,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">כיתות השכבה</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
-                            </li>
                             @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
