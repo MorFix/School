@@ -1,4 +1,5 @@
-﻿using SportStore.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using SportStore.Enums;
 
 namespace SportStore.Entities
 {
@@ -11,6 +12,15 @@ namespace SportStore.Entities
         public double AddressX { get; set; }
         public double AddressY { get; set; }
         public PermissionsLevel permissionsLevel { get; set; }
+
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                return ToString();
+            }
+        }
 
         protected User()
         {
@@ -25,6 +35,11 @@ namespace SportStore.Entities
             AddressX = address.X;
             AddressY = address.Y;
             permissionsLevel = permissions;
+        }
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
         }
     }
 }

@@ -53,7 +53,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">כיתות השכבה</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">כיתות השכבה</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
@@ -61,7 +61,10 @@
                             @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
-                                </li> 
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="Index">ניהול כיתות</a>
+                                </li>
                             }
                             <li class="nav-item">
                                 <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">

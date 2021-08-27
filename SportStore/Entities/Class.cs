@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using SportStore.Enums;
 
 namespace SportStore.Entities
 {
     public class Class : BaseEntity
     {
+        [Display(Name = "שם")]
         public string Name { get; set; }
+
+        [Display(Name = "שכבה")]
         public ClassLevel Level { get; set; }
 
+        [Display(Name = "מורה")]
         public Guid TeacherId { get; set; }
+
+        [Display(Name = "מורה")]
         public Teacher Teacher { get; set; }
 
+        [Display(Name = "חדר")]
         public Guid RoomId { get; set; }
+
+        [Display(Name = "חדר")]
         public Room Room { get; set; }
 
         public IEnumerable<Student> Students { get; set; }
