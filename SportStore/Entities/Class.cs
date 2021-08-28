@@ -7,19 +7,19 @@ namespace SportStore.Entities
 {
     public class Class : BaseEntity
     {
-        [Display(Name = "שם")]
+        [Required, Display(Name = "שם")]
         public string Name { get; set; }
 
-        [Display(Name = "שכבה")]
+        [Required, Display(Name = "שכבה")]
         public ClassLevel Level { get; set; }
 
-        [Display(Name = "מורה")]
+        [Required, Display(Name = "מורה")]
         public Guid TeacherId { get; set; }
 
         [Display(Name = "מורה")]
         public Teacher Teacher { get; set; }
 
-        [Display(Name = "חדר")]
+        [Required, Display(Name = "חדר")]
         public Guid RoomId { get; set; }
 
         [Display(Name = "חדר")]
