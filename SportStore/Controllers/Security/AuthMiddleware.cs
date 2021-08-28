@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using SportStore.DataBase;
 
@@ -14,20 +15,28 @@ namespace SportStore.Controllers.Security
             Next = next;
         }
 
-        public Task InvokeAsync(HttpContext context, SchoolContext dbCtx)
+        public async Task InvokeAsync(HttpContext context, SchoolContext dbCtx)
         {
-            var userId = context.User.Identity.Name;
-
             if (!context.User.Identity.IsAuthenticated)
             {
-                return Next(context);
+                await Next(context);
+
+                return;
             }
 
-            var user = dbCtx.Users.FirstOrDefault(x => x.IdNumber == userId);
+            var user = dbCtx.Users.FirstOrDefault(x => x.IdNumber == context.User.Identity.Name);
+            if (user == null)
+            {
+                await context.SignOutAsync();
+
+                context.Response.Redirect("/");
+
+                return;
+            }
 
             context.Items.Add("user", user);
-
-            return Next(context);
+            
+            await Next(context);
         }
     }
 }

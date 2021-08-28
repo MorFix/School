@@ -43,7 +43,7 @@
                             </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && user != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">ראשי</a>
@@ -55,7 +55,7 @@
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">כיתות השכבה</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">דף קשר</a>
                             </li>
                             @if (user.permissionsLevel == SportStore.Enums.PermissionsLevel.Manage) {
                                 <li class="nav-item">
