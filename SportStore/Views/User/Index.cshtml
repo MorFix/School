@@ -1,11 +1,11 @@
 @model IEnumerable<SportStore.Entities.User>
 
 @{
-    ViewData["Title"] = "ςψιλϊ ξωϊξωιν";
+    ViewData["Title"] = "ΧΆΧ¨Χ™Χ›Χª ΧΧ©ΧªΧΧ©Χ™Χ";
     var idNumber = User.Identity.Name;
 }
 
-<h1>ςψιλϊ ξωϊξωιν</h1>
+<h1>ΧΆΧ¨Χ™Χ›Χª ΧΧ©ΧªΧΧ©Χ™Χ</h1>
 
 <table class="table">
     <thead>
@@ -36,9 +36,9 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">ςψεκ</a>
-                <a asp-action="Details" asp-route-id="@item.Id">τψθιν</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">ξηχ</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">ΧΆΧ¨Χ•Χ</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Χ¤Χ¨ΧΧ™Χ</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">ΧΧ—Χ§</a>
             </td>
         </tr>
 }

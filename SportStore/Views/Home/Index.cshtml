@@ -5,10 +5,10 @@
 </script>
 <script defer> 
     $(document).ready(function () {
-        getLocation();
+        setWeather();
     })
 
-    function getLocation() {
+    function setWeather() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(getWeather)
         }
@@ -23,7 +23,8 @@
                 units: 'metric',
                 APPID: 'e5ed663b00379c266bb4dc85f4fc4055'
             },
-            success: function (res) { showWeatherDetails(res, task) }
+            success: function (res) { showWeatherDetails(res, task) },
+            error: function (e) { console.log(e) }
         })
     }
 
