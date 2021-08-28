@@ -1,15 +1,9 @@
 ﻿@{ ViewData["Title"] = "Home Page";}
-@model SportStore.Entities.Point;
-
-@{
-    var x = Model.X;
-    var y = Model.Y;
-}
 
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDasA7_C8s-T2dAXutOSqVBiCAsz3zJ3zo&callback=initMap">
 </script>
-<script>
+<script defer> 
     $(document).ready(function () {
         getLocation();
     })
@@ -48,53 +42,54 @@
         return 'ארוך';
     }
 
-</script>
-<style>
-    #map {
-        width: 100%;
-        height: 400px;
-        background-color: grey;
+    function getLocation() {
+        var geocoder = new google.maps.Geocoder();
+        var address = "@Html.Raw(ViewBag.address)";
+
+        return new Promise((resolve, reject) => {
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    resolve({
+                        x: parseFloat(results[0].geometry.location.lat()),
+                        y: parseFloat(results[0].geometry.location.lng())
+                    });
+                } else {
+                    reject();
+                }
+            });
+        });
     }
-</style>
 
-<div style="display: flex; align-items: center;">
-    <img id='weather_img' style="height: 70px"/>
-    <div style="display: flex">
-        <div>מזג האוויר היום הוא:&nbsp;</div>
-        <div class='degrees_sign'>C°</div><div id='weather_degrees' class='degrees'></div>
-        <div>&nbsp;על כן המלצתנו היום היא ללבוש:&nbsp;</div><div id="clothes_recommendation"></div>
-    </div>
-</div>
-<div>
-    <div>מצא את הדרך הטובה ביותר לבית הספר מביתך</div>
-    <div id="map"></div>
-</div>
+    function initMap() {
+        if (google) {
+            getLocation().then(function (address) {
+                var userAddress = new google.maps.LatLng(address.x, address.y);
+                var school = new google.maps.LatLng(31.96978575143069, 34.772818286428965);
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: userAddress
+                });
 
+                new google.maps.Marker({
+                    position: userAddress,
+                    title: "Home",
+                    label: "Home",
+                    map: map
+                });
+                new google.maps.Marker({
+                    position: school,
+                    title: "School",
+                    label: "School",
+                    map: map
+                });
 
-<script>
-     function initMap() {
-         var userAddress = new google.maps.LatLng(@x, @y);
-         var school = new google.maps.LatLng(31.96978575143069, 34.772818286428965);
-         var map = new google.maps.Map(document.getElementById('map'), {
-             zoom: 15,
-             center: userAddress
-         });
-
-         new google.maps.Marker({
-             position: userAddress,
-             title: "Home",
-             label: "Home",
-             map: map
-         });
-         new google.maps.Marker({
-            position: school,
-            title: "School",
-            label: "School",
-            map: map
-         });
-
-        // get route from A to B
-         calculateAndDisplayRoute(map, userAddress, school);
+                // get route from A to B
+                calculateAndDisplayRoute(map, userAddress, school);
+            })
+                .catch(function () {
+                    console.log("error parsing the address");
+                })
+        }
     }
 
     function calculateAndDisplayRoute(map, pointA, pointB) {
@@ -116,3 +111,24 @@
         });
     }
 </script>
+
+<style>
+    #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+    }
+</style>
+
+<div style="display: flex; align-items: center;">
+    <img id='weather_img' style="height: 70px" />
+    <div style="display: flex">
+        <div>מזג האוויר היום הוא:&nbsp;</div>
+        <div class='degrees_sign'>C°</div><div id='weather_degrees' class='degrees'></div>
+        <div>&nbsp;על כן המלצתנו היום היא ללבוש:&nbsp;</div><div id="clothes_recommendation"></div>
+    </div>
+</div>
+<div>
+    <div>מצא את הדרך הטובה ביותר לבית הספר מביתך</div>
+    <div id="map"></div>
+</div>

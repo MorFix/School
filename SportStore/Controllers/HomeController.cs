@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SportStore.Controllers
 {
@@ -30,9 +31,9 @@ namespace SportStore.Controllers
             
             if (user != null)
             {
-                var address = new Point(user.AddressX, user.AddressY);
-                
-                return View(address);
+                ViewBag.address = user.Address;
+
+                return View();
             }
 
             return Redirect("/Register");
@@ -64,29 +65,6 @@ namespace SportStore.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             return Redirect(returnUrl ?? "/Home");
-        }
-
-        [AllowAnonymous]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, string firstName, string lastName, Guid classId, Point address)
-        {
-            var dbUser = Ctx.Users.FirstOrDefault(x => x.IdNumber == username);
-            if (dbUser != null)
-            {
-                return View(new LoginViewModel("המשתמש קיים במערכת"));
-            }
-
-            Ctx.Students.Add(new Student(username, firstName, lastName, password, classId, address));
-
-            await Ctx.SaveChangesAsync();
-            
-            return Redirect("/Home");
         }
 
         public async Task<IActionResult> Logout()

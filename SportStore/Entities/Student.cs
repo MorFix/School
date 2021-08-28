@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SportStore.Enums;
+using SportStore.ViewModels;
 
 namespace SportStore.Entities
 {
@@ -15,12 +16,19 @@ namespace SportStore.Entities
         {
         }
 
-        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, Point address,
+        public Student(string idNumber, string firstName, string lastName, string password, Guid classId, string address,
             PermissionsLevel permissions = PermissionsLevel.Watch, string behavior = "") : base(idNumber, firstName, lastName, password, address, permissions)
         {
             Lessons = new List<Lesson>();
             ClassId = classId;
             Behavior = behavior;
+        }
+
+        public Student(UserViewModel userViewModel) : base(userViewModel, PermissionsLevel.Watch)
+        {
+            Lessons = new List<Lesson>();
+            ClassId = userViewModel.ClassId;
+            Behavior = "";
         }
     }
 }

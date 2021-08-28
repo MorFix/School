@@ -1,0 +1,46 @@
+@model IEnumerable<SportStore.Entities.User>
+
+@{
+    ViewData["Title"] = "עריכת משתמשים";
+    var idNumber = User.Identity.Name;
+}
+
+<h1>עריכת משתמשים</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    var isMe = item.IdNumber == idNumber;
+        <tr style="@(isMe ? "Background-color:red" : "")">
+            <td>
+                @Html.DisplayFor(modelItem => item.IdNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a>
+                <a asp-action="Details" asp-route-id="@item.Id">פרטים</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

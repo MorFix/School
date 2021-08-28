@@ -1,0 +1,78 @@
+@model SportStore.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "פרטי משתמש";
+}
+
+<script>
+    function showClasses() {
+        var x1 = document.getElementById("class1");
+        var x2 = document.getElementById("class2");
+        var type = document.getElementById("Type").value;
+
+        if (type === "Teacher") {
+            x1.style.display = "none";
+            x2.style.display = "none";
+        }
+    }
+
+    $(document).ready(function () {
+        showClasses();
+    });
+</script>
+
+<h1>פרטי משתמש</h1>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt id="class1" class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassId)
+        </dt>
+        <dd id="class2" class="col-sm-10">
+            @Html.DropDownListFor(model => model.ClassId, new SelectList(ViewBag.Classes, "Id", "Name"), new { disabled = "disabled" })
+        </dd>
+        @Html.HiddenFor(model => model.Type)
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">ערוך</a>
+    <a asp-action="Index">חזור</a>
+</div>

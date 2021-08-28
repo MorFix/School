@@ -1,16 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using SportStore.Enums;
+using SportStore.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportStore.Entities
 {
     public abstract class User : BaseEntity
     {
+        [Display(Name = "תעודת זהות")]
         public string IdNumber { get; set; }
+        [Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
+        [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
         public string Password { get; set; }
-        public double AddressX { get; set; }
-        public double AddressY { get; set; }
+        public string Address { get; set; }
         public PermissionsLevel permissionsLevel { get; set; }
 
         [NotMapped]
@@ -26,14 +30,23 @@ namespace SportStore.Entities
         {
         }
 
-        protected User(string idNumber, string firstName, string lastName, string password, Point address, PermissionsLevel permissions)
+        protected User(string idNumber, string firstName, string lastName, string password, string address, PermissionsLevel permissions)
         {
             IdNumber = idNumber;
             FirstName = firstName;
             LastName = lastName;
             Password = password;
-            AddressX = address.X;
-            AddressY = address.Y;
+            Address = address;
+            permissionsLevel = permissions;
+        }
+
+        protected User(UserViewModel userViewModel, PermissionsLevel permissions)
+        {
+            IdNumber = userViewModel.IdNumber;
+            FirstName = userViewModel.FirstName;
+            LastName = userViewModel.LastName;
+            Password = userViewModel.Password;
+            Address = userViewModel.Address;
             permissionsLevel = permissions;
         }
 

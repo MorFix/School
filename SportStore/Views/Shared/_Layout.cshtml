@@ -71,7 +71,7 @@
                             
                             <li class="flex-grow-1" />
                             <li class="nav-item">
-                                <span class="nav-link text-dark" style="font-weight: bold">שלום @user?.FirstName</span>
+                                <a class="nav-link text-dark" style="font-weight: bold" asp-area="" asp-controller="User" asp-action="Index">שלום @user?.FirstName</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">יציאה</a>
@@ -80,7 +80,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">הרשמה</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">הרשמה</a>
                             </li>
                         }
                     </ul>
