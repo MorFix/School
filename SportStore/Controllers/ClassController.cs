@@ -74,7 +74,7 @@ namespace SportStore.Controllers
         [Permissions(PermissionsLevel.Manage)]
         public IActionResult Create()
         {
-            ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id");
+            ViewData["Room"] = new SelectList(_context.Rooms, "Id", "Name");
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
             ViewData["Level"] = ClassLevel.First.ToSelectList();
 
@@ -96,7 +96,7 @@ namespace SportStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
+            ViewData["Room"] = new SelectList(_context.Rooms, "Id", "Name", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
             ViewData["Level"] = @class.Level.ToSelectList();
 
@@ -117,7 +117,7 @@ namespace SportStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
+            ViewData["Room"] = new SelectList(_context.Rooms, "Id", "Name", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
             ViewData["Level"] = @class.Level.ToSelectList();
 
@@ -157,7 +157,7 @@ namespace SportStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
+            ViewData["Room"] = new SelectList(_context.Rooms, "Id", "Name", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
             ViewData["Level"] = @class.Level.ToSelectList();
 
