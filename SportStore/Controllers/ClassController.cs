@@ -24,10 +24,15 @@ namespace SportStore.Controllers
 
         // GET: Class
         [Permissions(PermissionsLevel.Manage)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString = "")
         {
-            var schoolContext = _context.Classes.Include(x => x.Room).Include(x => x.Teacher);
-            return View(await schoolContext.ToListAsync());
+            var hasQuery = !string.IsNullOrWhiteSpace(searchString);
+            var results = _context.Classes
+                .Include(x => x.Room)
+                .Include(x => x.Teacher)
+                .Where(x => !hasQuery || x.Name.Contains(searchString));
+
+            return View(await results.ToListAsync());
         }
 
         // GET: Class/Details/5

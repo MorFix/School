@@ -3,6 +3,8 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "כיתות";
+
+    var searchName = "searchString";
 }
 
 <!DOCTYPE html>
@@ -16,6 +18,15 @@
     <p>
         <a asp-action="Create">יצירת כיתה</a>
     </p>
+
+    <form asp-controller="Class" asp-action="Index" method="get">
+        <p>
+            <span>שם כיתה</span>
+            <input name="@searchName" type="text" placeholder="חיפוש" value="@Context.Request.Query[searchName]" />
+            <input type="submit" value="סינון" />
+        </p>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
