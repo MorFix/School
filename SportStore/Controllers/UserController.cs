@@ -1,13 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SportStore.Controllers.Security;
 using SportStore.DataBase;
 using SportStore.Entities;
 using SportStore.Enums;
@@ -15,6 +14,7 @@ using SportStore.ViewModels;
 
 namespace SportStore.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly SchoolContext _context;
@@ -25,16 +25,19 @@ namespace SportStore.Controllers
         }
 
         // GET: User
-        public IActionResult Index()
+        public Task<IActionResult> Index()
         {
-            var idNumber = User.Identity.Name;
-            var isManagerLevel = _context.Users
-               .AsQueryable()
-               .First(x => x.IdNumber == idNumber).permissionsLevel == PermissionsLevel.Manage;
+            var currentUser = HttpContext.GetSchoolUser();
 
-            return View(_context.Users.ToList()
-                .Where(x => x.IdNumber == idNumber || (isManagerLevel && x is Student))
-                .OrderByDescending(x => x.IdNumber == idNumber));
+            if (currentUser.permissionsLevel == PermissionsLevel.Manage) {
+                var students = _context.Users.ToList()
+                    .Where(x => x.Id == currentUser.Id || x is Student)
+                    .OrderByDescending(x => x.Id == currentUser.Id);
+
+                return Task.FromResult((IActionResult) View("Index", students));
+            }
+
+            return Details(currentUser.Id);
         }
 
         // GET: User/Details/5
@@ -43,6 +46,12 @@ namespace SportStore.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = HttpContext.GetSchoolUser();
+            if (currentUser.permissionsLevel != PermissionsLevel.Manage)
+            {
+                id = currentUser.Id;
             }
 
             var user = await _context.Users
@@ -55,9 +64,9 @@ namespace SportStore.Controllers
 
             var userViewModel = new UserViewModel(user);
             ViewData["Classes"] = _context.Classes;
-            ViewData["Type"] = EnumToSelectList(userViewModel.Type);
+            ViewData["Type"] = userViewModel.Type.ToSelectList();
 
-            return View(userViewModel);
+            return View("Details", userViewModel);
         }
 
         // GET: User/Create
@@ -65,7 +74,7 @@ namespace SportStore.Controllers
         public IActionResult Create()
         {
             ViewData["ClassId"] = new SelectList(_context.Classes.ToList().OrderBy(x => x.Name), "Id", "Name");
-            ViewData["Type"] = EnumToSelectList<UserType>();
+            ViewData["Type"] = UserType.Student.ToSelectList();
 
             return View();
         }
@@ -84,9 +93,9 @@ namespace SportStore.Controllers
 
                 if (dbUser != null)
                 {
-                    ViewBag.Error = "המשתמש קיים במערכת";
+                    ViewBag.Error = "?????? ???? ????";
                     ViewData["ClassId"] = new SelectList(_context.Classes.ToList().OrderBy(x => x.Name), "Id", "Name");
-                    ViewData["Type"] = EnumToSelectList<UserType>();
+                    ViewData["Type"] = UserType.Student.ToSelectList();
                     return View();
                 }
 
@@ -108,7 +117,7 @@ namespace SportStore.Controllers
             }
 
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name");
-            ViewData["Type"] = EnumToSelectList<UserType>();
+            ViewData["Type"] = UserType.Student.ToSelectList();
             return View(userViewModel);
         }
 
@@ -118,6 +127,11 @@ namespace SportStore.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = HttpContext.GetSchoolUser();
+            if (currentUser.permissionsLevel != PermissionsLevel.Manage) {
+                id = currentUser.Id;
             }
 
             var user = _context.Users
@@ -131,7 +145,7 @@ namespace SportStore.Controllers
 
             var userViewModel = new UserViewModel(user);
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name");
-            ViewData["Type"] = EnumToSelectList(userViewModel.Type);
+            ViewData["Type"] = userViewModel.Type.ToSelectList();
             return View(userViewModel);
         }
 
@@ -147,40 +161,35 @@ namespace SportStore.Controllers
                 return NotFound();
             }
 
+            var currentUser = HttpContext.GetSchoolUser();
+            if (currentUser.permissionsLevel != PermissionsLevel.Manage)
+            {
+                id = currentUser.Id;
+            }
+
+            var dbUser = await _context.Users.FindAsync(id);
+            if (dbUser == null) {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                try
+                dbUser.Address = userViewModel.Address;
+                dbUser.Password = userViewModel.Password;
+
+                if (dbUser is Student)
                 {
-                    var dbUser = _context.Users
-                        .FirstOrDefault(x => x.IdNumber == userViewModel.IdNumber && x.IdNumber == User.Identity.Name);
-
-                    dbUser.Address = userViewModel.Address;
-                    dbUser.Password = userViewModel.Password;
-
-                    if (dbUser is Student)
-                    {
-                        ((Student)dbUser).ClassId = userViewModel.ClassId;
-                    }
-
-                    _context.Update(dbUser);
-                    await _context.SaveChangesAsync();
+                    ((Student)dbUser).ClassId = userViewModel.ClassId;
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(userViewModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return Redirect("/Home");
+
+                _context.Update(dbUser);
+                await _context.SaveChangesAsync();
+
+                return await Index();
             }
 
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name");
-            ViewData["Type"] = EnumToSelectList(userViewModel.Type);
+            ViewData["Type"] = userViewModel.Type.ToSelectList();
             return View(userViewModel);
         }
 
@@ -190,6 +199,12 @@ namespace SportStore.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = HttpContext.GetSchoolUser();
+            if (currentUser.permissionsLevel != PermissionsLevel.Manage)
+            {
+                id = currentUser.Id;
             }
 
             var user = await _context.Users
@@ -207,36 +222,28 @@ namespace SportStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            var currentUser = HttpContext.GetSchoolUser();
+            if (currentUser.permissionsLevel != PermissionsLevel.Manage)
+            {
+                id = currentUser.Id;
+            }
+
             var user = await _context.Users.FindAsync(id);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-            await HttpContext.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            if (id == currentUser.Id) {
+                await HttpContext.SignOutAsync();
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return await Index();
         }
 
         private bool UserExists(Guid id)
         {
             return _context.Users.Any(e => e.Id == id);
-        }
-
-        private SelectList EnumToSelectList<TEnum>(TEnum enumObj = default)
-          where TEnum : struct, IComparable, IFormattable, IConvertible
-        {
-            var values = from TEnum e in Enum.GetValues(typeof(TEnum))
-                         select new { Id = e, Name = GetEnumDisplayName(e) };
-
-            return new SelectList(values, "Id", "Name", enumObj);
-        }
-
-        private string GetEnumDisplayName<TEnum>(TEnum enumObj)
-           where TEnum : struct
-        {
-            return enumObj.GetType()
-                            .GetMember(enumObj.ToString())
-                            .First()
-                            .GetCustomAttribute<DisplayAttribute>()
-                            ?.GetName();
         }
     }
 }

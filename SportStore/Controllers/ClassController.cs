@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using SportStore.Controllers.Security;
 using SportStore.DataBase;
@@ -79,7 +76,7 @@ namespace SportStore.Controllers
         {
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id");
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
-            ViewData["Level"] = EnumToSelectList<ClassLevel>();
+            ViewData["Level"] = ClassLevel.First.ToSelectList();
 
             return View();
         }
@@ -101,7 +98,7 @@ namespace SportStore.Controllers
             }
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
-            ViewData["Level"] = EnumToSelectList(@class.Level);
+            ViewData["Level"] = @class.Level.ToSelectList();
 
             return View(@class);
         }
@@ -122,7 +119,7 @@ namespace SportStore.Controllers
             }
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
-            ViewData["Level"] = EnumToSelectList(@class.Level);
+            ViewData["Level"] = @class.Level.ToSelectList();
 
             return View(@class);
         }
@@ -162,7 +159,7 @@ namespace SportStore.Controllers
             }
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Id", @class.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", @class.TeacherId);
-            ViewData["Level"] = EnumToSelectList(@class.Level);
+            ViewData["Level"] = @class.Level.ToSelectList();
 
             return View(@class);
         }
@@ -203,25 +200,6 @@ namespace SportStore.Controllers
         private bool ClassExists(Guid id)
         {
             return _context.Classes.Any(e => e.Id == id);
-        }
-
-        private SelectList EnumToSelectList<TEnum>(TEnum enumObj = default)
-            where TEnum : struct, IComparable, IFormattable, IConvertible
-        {
-            var values = from TEnum e in Enum.GetValues(typeof(TEnum))
-                         select new { Id = e, Name = GetEnumDisplayName(e) };
-
-            return new SelectList(values, "Id", "Name", enumObj);
-        }
-
-        private string GetEnumDisplayName<TEnum>(TEnum enumObj)
-            where TEnum : struct
-        {
-            return enumObj.GetType()
-                            .GetMember(enumObj.ToString())
-                            .First()
-                            .GetCustomAttribute<DisplayAttribute>()
-                            ?.GetName();
         }
     }
 }

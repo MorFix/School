@@ -73,5 +73,8 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">ערוך</a>
-    <a asp-action="Index">חזור</a>
+    @if (Context.GetSchoolUser().permissionsLevel == SportStore.Enums.PermissionsLevel.Manage)
+    {
+        <a asp-action="Index">חזור</a>
+    }
 </div>

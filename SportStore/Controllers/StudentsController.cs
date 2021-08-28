@@ -5,6 +5,7 @@ using System.Linq;
 using SportStore.Controllers.Security;
 using SportStore.Enums;
 using System.Threading.Tasks;
+using System;
 
 namespace SportStore.Controllers
 {
@@ -23,6 +24,7 @@ namespace SportStore.Controllers
         public IActionResult Index()
         {
             var students = _ctx.Students.ToList();
+            ViewData["Behavior"] = StudentBehavior.Good.ToSelectList();
               
             return View(students);
         }
@@ -36,7 +38,7 @@ namespace SportStore.Controllers
                 return NotFound();
             }
 
-            dbstudent.Behavior = behavior;
+            dbstudent.Behavior = Enum.Parse<StudentBehavior>(behavior);
             _ctx.Update(dbstudent);
             await _ctx.SaveChangesAsync();
 

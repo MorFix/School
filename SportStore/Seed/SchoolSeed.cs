@@ -44,26 +44,26 @@ namespace SportStore.Seed
             var class2 = new Class("A2", ClassLevel.First, teacher2.Id, room2.Id);
             var class3 = new Class("A3", ClassLevel.First, teacher3.Id, room3.Id);
 
-            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: "טובה מאוד");
-            var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, "מבצע ליטאני 2", behavior: "טובה מאוד");
-            var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id, "מבצע ליטאני 2", behavior: "טובה מאוד");
-            var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: "ככה ככה, מפריע");
-            var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id, "מבצע ליטאני 2", behavior: "טובה");
+            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
+            var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Excellent);
+            var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
+            var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Enough);
+            var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Good);
             var student6 = new Student("325142444", "Amit", "Hachmon", "1234", class1.Id, "מבצע ליטאני 2");
             var student7 = new Student("318273625", "Dana", "Erez", "1234", class1.Id, "מבצע ליטאני 2");
-            var student8 = new Student("324152614", "May", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "טובה");
-            var student9 = new Student("211234561", "Maya", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "טובה");
-            var student10 = new Student("211234561", "Rahav", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "טובה");
-            var student11 = new Student("211234561", "Ori", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "טובה");
+            var student8 = new Student("324152614", "May", "Menash", "1234", class2.Id, "מבצע ליטאני 2");
+            var student9 = new Student("211234561", "Maya", "Menash", "1234", class2.Id, "מבצע ליטאני 2");
+            var student10 = new Student("211234561", "Rahav", "Menash", "1234", class2.Id, "מבצע ליטאני 2");
+            var student11 = new Student("211234561", "Ori", "Menash", "1234", class2.Id, "מבצע ליטאני 2");
             var student12 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, "מבצע ליטאני 2");
-            var student13 = new Student("211234561", "Michal", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "ככה ככה, מפריע");
-            var student14 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: "ככה ככה, מפריע");
+            var student13 = new Student("211234561", "Michal", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Bad);
+            var student14 = new Student("411234561", "Avi", "Menash", "1234", class2.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Bad);
             var student15 = new Student("311234561", "Avi", "Menash", "1234", class3.Id, "מבצע ליטאני 2");
             var student16 = new Student("223234561", "Omer", "Menash", "1234", class3.Id, "מבצע ליטאני 2");
             var student17 = new Student("215243222", "Tal", "Menash", "1234", class3.Id, "מבצע ליטאני 2");
             var student18 = new Student("231144562", "Noa", "Menash", "1234", class3.Id, "מבצע ליטאני 2");
-            var student19 = new Student("311278522", "Yael`", "Menash", "1234", class3.Id, "מבצע ליטאני 2", behavior: "טובה מאוד");
-            var student20 = new Student("266254190", "Lior", "Menash", "1234", class3.Id, "מבצע ליטאני 2", behavior: "טובה מאוד");
+            var student19 = new Student("311278522", "Yael`", "Menash", "1234", class3.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
+            var student20 = new Student("266254190", "Lior", "Menash", "1234", class3.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
 
             // Sunday
             var lessonSunday1A1 = new Lesson(teacher1.Id, room1.Id, Subject.Art, DayOfWeek.Sunday, 1) {Students = class1.Students};
