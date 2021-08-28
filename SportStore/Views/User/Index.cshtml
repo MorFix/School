@@ -7,6 +7,22 @@
 
 <h1>עריכת משתמשים</h1>
 
+<form asp-controller="User" asp-action="Index" method="get">
+    <p>
+        <span>תעודת זהות</span>
+        <input name="idNumber" type="text" value="@Context.Request.Query["idNumber"]" />
+    </p>
+
+    <p>
+        <span>שם תלמיד</span>
+        <input name="name" type="text" placeholder="חיפוש" value="@Context.Request.Query["name"]" />
+    </p>
+
+    <p>
+        <input type="submit" value="סינון" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>

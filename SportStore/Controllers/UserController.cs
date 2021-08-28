@@ -25,19 +25,25 @@ namespace SportStore.Controllers
         }
 
         // GET: User
-        public Task<IActionResult> Index()
+        public IActionResult Index(string idNumber = "", string name = "")
         {
             var currentUser = HttpContext.GetSchoolUser();
 
+            var filters = new Predicate<User>[] {
+                x => x.Id == currentUser.Id || x is Student,
+                x => string.IsNullOrWhiteSpace(idNumber) || x.IdNumber.Contains(idNumber),
+                x => string.IsNullOrWhiteSpace(name) || x.FullName.Contains(name, StringComparison.CurrentCultureIgnoreCase)
+            };
+
             if (currentUser.permissionsLevel == PermissionsLevel.Manage) {
                 var students = _context.Users.ToList()
-                    .Where(x => x.Id == currentUser.Id || x is Student)
+                    .Where(x => filters.All(filter => filter(x)))
                     .OrderByDescending(x => x.Id == currentUser.Id);
 
-                return Task.FromResult((IActionResult) View("Index", students));
+                return View("Index", students);
             }
 
-            return Details(currentUser.Id);
+            return RedirectToAction("Details", new { id = currentUser.Id });
         }
 
         // GET: User/Details/5
@@ -185,7 +191,7 @@ namespace SportStore.Controllers
                 _context.Update(dbUser);
                 await _context.SaveChangesAsync();
 
-                return await Index();
+                return Index();
             }
 
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Name");
@@ -238,7 +244,7 @@ namespace SportStore.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return await Index();
+            return Index();
         }
 
         private bool UserExists(Guid id)
