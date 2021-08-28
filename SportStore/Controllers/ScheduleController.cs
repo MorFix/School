@@ -2,6 +2,8 @@
 using SportStore.DataBase;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using SportStore.Controllers.Security;
+using SportStore.Enums;
 
 namespace SportStore.Controllers
 {
@@ -16,6 +18,7 @@ namespace SportStore.Controllers
             _ctx = ctx;
         }
 
+        [Permissions(PermissionsLevel.Watch)]
         public IActionResult Index()
         {
             var lessons = _ctx.Lessons
