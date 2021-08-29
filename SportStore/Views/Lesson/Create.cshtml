@@ -1,0 +1,65 @@
+﻿@using SportStore.Enums
+@model SportStore.Entities.Lesson
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>יצירה</h1>
+
+<h4>שיעור</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label">מורה</label>
+                <select asp-for="TeacherId" class ="form-control" asp-items="ViewBag.TeacherId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomId" class="control-label">חדר</label>
+                <select asp-for="RoomId" class ="form-control" asp-items="ViewBag.RoomId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label">מקצוע</label>
+                <select asp-for="Subject" class="form-control">
+                    <option value="@Subject.Art">Art</option>
+                    <option value="@Subject.Boxing">Boxing</option>
+                    <option value="@Subject.Economics">Economics</option>
+                    <option value="@Subject.English">English</option>
+                    <option value="@Subject.Math">Math</option>
+                    <option value="@Subject.Music">Music</option>
+                    <option value="@Subject.Spanish">Spanish</option>
+                </select>
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayOfWeek" class="control-label">יום</label>
+                <select asp-for="DayOfWeek" class="form-control">
+                    <option value="@DayOfWeek.Sunday">Sunday</option>
+                    <option value="@DayOfWeek.Monday">Monday</option>
+                    <option value="@DayOfWeek.Tuesday">Tuesday</option>
+                    <option value="@DayOfWeek.Wednesday">Wednesday</option>
+                    <option value="@DayOfWeek.Thursday">Thursday</option>
+                    <option value="@DayOfWeek.Friday">Friday</option>
+                    <option value="@DayOfWeek.Saturday">Saturday</option>
+                </select>
+                <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hour" class="control-label">שעה</label>
+                <input asp-for="Hour" class="form-control" />
+                <span asp-validation-for="Hour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="צור!" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">חזור לרשימת השיעורים</a>
+</div>
+
