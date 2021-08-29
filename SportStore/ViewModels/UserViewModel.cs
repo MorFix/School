@@ -7,17 +7,17 @@ namespace SportStore.ViewModels
     public class UserViewModel
     {
         public Guid Id { get; set; }
-        [Required, Display(Name = "תעודת זהות")]
+        [Required(ErrorMessage = "חובה להזין תעודת זהות תקינה"), RegularExpression("^\\d{8,9}$", ErrorMessage = "מספר תעודת הזהות הינו רצף של 8 או 9 ספרות"), Display(Name = "תעודת זהות")]
         public string IdNumber { get; set; }
-        [Required, Display(Name = "שם פרטי")]
+        [Required(ErrorMessage = "חובה להזין שם פרטי"), Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
-        [Required, Display(Name = "שם משפחה")]
+        [Required(ErrorMessage = "חובה להזין שם משפחה"), Display(Name = "שם משפחה")]
         public string LastName { get; set; }
-        [Required, Display(Name = "סיסמא")]
+        [Required(ErrorMessage = "חובה להזין סיסמא"), Display(Name = "סיסמא")]
         public string Password { get; set; }
         [Required, Display(Name = "סוג משתמש")]
         public UserType Type { get; set; }
-        [Required, Display(Name = "כתובת")]
+        [Required(ErrorMessage = "חובה להזין כתובת"), Display(Name = "כתובת")]
         public string Address { get; set; }
         [Display(Name="כיתה")]
         public Guid ClassId { get; set; }

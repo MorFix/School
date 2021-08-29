@@ -7,6 +7,15 @@
 <p>
     <a asp-action="Create">צור שיעור חדש</a>
 </p>
+
+<form asp-controller="Lesson" asp-action="Index" method="get">
+    <p>
+        <span>סינון לפי מורה</span>
+        <input name="teacher" type="text" value="@Context.Request.Query["teacher"]" />
+        <input type="submit" value="סינון" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,29 +38,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teacher.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DayOfWeek)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hour)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">פרטים</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Teacher.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hour)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">פרטים</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

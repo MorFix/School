@@ -7,7 +7,7 @@ namespace SportStore.Entities
 {
     public class Class : BaseEntity
     {
-        [Required, Display(Name = "שם")]
+        [Required(ErrorMessage = "חובה להזין שם"), Display(Name = "שם")]
         public string Name { get; set; }
 
         [Required, Display(Name = "שכבה")]

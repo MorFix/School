@@ -1,6 +1,7 @@
 ﻿using SportStore.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportStore.Entities
 {
@@ -13,6 +14,8 @@ namespace SportStore.Entities
         public Room Room { get; set; }
         public Subject Subject { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+
+        [Required(ErrorMessage = "חובה להזין שעה"), Range(0, 20, ErrorMessage = "על השעה להיות מספר חיובי בין 0 ל20")]
         public int Hour { get; set; }
 
         public Lesson()
