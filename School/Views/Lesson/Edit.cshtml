@@ -1,5 +1,4 @@
-﻿@using School.Enums
-@model School.Entities.Lesson
+﻿@model School.Entities.Lesson
 
 @{
     ViewData["Title"] = "עריכת שיעור";
@@ -25,28 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label">מקצוע</label>
-                <select asp-for="Subject" class="form-control">
-                    <option value="@Subject.Art">Art</option>
-                    <option value="@Subject.Boxing">Boxing</option>
-                    <option value="@Subject.Economics">Economics</option>
-                    <option value="@Subject.English">English</option>
-                    <option value="@Subject.Math">Math</option>
-                    <option value="@Subject.Music">Music</option>
-                    <option value="@Subject.Spanish">Spanish</option>
-                </select>
+                <select asp-for="Subject" class="form-control" asp-items="ViewBag.Subject"></select>
                 <span asp-validation-for="Subject" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DayOfWeek" class="control-label">יום</label>
-                <select asp-for="DayOfWeek" class="form-control">
-                    <option value="@DayOfWeek.Sunday">Sunday</option>
-                    <option value="@DayOfWeek.Monday">Monday</option>
-                    <option value="@DayOfWeek.Tuesday">Tuesday</option>
-                    <option value="@DayOfWeek.Wednesday">Wednesday</option>
-                    <option value="@DayOfWeek.Thursday">Thursday</option>
-                    <option value="@DayOfWeek.Friday">Friday</option>
-                    <option value="@DayOfWeek.Saturday">Saturday</option>
-                </select>
+                <select asp-for="DayOfWeek" class="form-control" asp-items="ViewBag.DayOfWeek"></select>
                 <span asp-validation-for="DayOfWeek" class="text-danger"></span>
             </div>
             <div class="form-group">

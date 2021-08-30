@@ -63,6 +63,8 @@ namespace School.Controllers
         {
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Name");
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
+            ViewData["Subject"] = Subject.Art.ToSelectList();
+            ViewData["DayOfWeek"] = DayOfWeek.Sunday.ToSelectList(GetDayDisplayName);
 
             return View();
         }
@@ -86,6 +88,8 @@ namespace School.Controllers
 
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Name", lesson.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", lesson.TeacherId);
+            ViewData["Subject"] = lesson.Subject.ToSelectList();
+            ViewData["DayOfWeek"] = lesson.DayOfWeek.ToSelectList(GetDayDisplayName);
 
             return View(lesson);
         }
@@ -104,8 +108,12 @@ namespace School.Controllers
             {
                 return NotFound();
             }
+
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Name", lesson.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", lesson.TeacherId);
+            ViewData["Subject"] = lesson.Subject.ToSelectList();
+            ViewData["DayOfWeek"] = lesson.DayOfWeek.ToSelectList(GetDayDisplayName);
+
             return View(lesson);
         }
 
@@ -142,8 +150,12 @@ namespace School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["RoomId"] = new SelectList(_context.Rooms, "Id", "Name", lesson.RoomId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", lesson.TeacherId);
+            ViewData["Subject"] = lesson.Subject.ToSelectList();
+            ViewData["DayOfWeek"] = lesson.DayOfWeek.ToSelectList(GetDayDisplayName);
+
             return View(lesson);
         }
 
@@ -183,6 +195,28 @@ namespace School.Controllers
         private bool LessonExists(Guid id)
         {
             return _context.Lessons.Any(e => e.Id == id);
+        }
+
+        public static string GetDayDisplayName(DayOfWeek day) {
+            switch (day)
+            {
+                case DayOfWeek.Sunday:
+                    return "ראשון";
+                case DayOfWeek.Monday:
+                    return "שני";
+                case DayOfWeek.Tuesday:
+                    return "שלישי";
+                case DayOfWeek.Wednesday:
+                    return "רביעי";
+                case DayOfWeek.Thursday:
+                    return "חמישי";
+                case DayOfWeek.Friday:
+                    return "שישי";
+                case DayOfWeek.Saturday:
+                    return "שבת";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

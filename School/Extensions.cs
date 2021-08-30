@@ -8,12 +8,12 @@ namespace School
 {
     public static class Extensions
     {
-        public static SelectList ToSelectList<TEnum>(this TEnum enumObj)
+        public static SelectList ToSelectList<TEnum>(this TEnum enumObj, Func<TEnum, string> getEnumDisplayName = null)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
             var values = from TEnum e in Enum.GetValues(typeof(TEnum))
-                         select new { Id = e, Name = GetEnumDisplayName(e) };
-
+                         select new { Id = e, Name = (getEnumDisplayName ?? GetEnumDisplayName)(e) };
+            
             return new SelectList(values, "Id", "Name", enumObj);
         }
 
@@ -24,7 +24,7 @@ namespace School
                             .GetMember(enumObj.ToString())
                             .First()
                             .GetCustomAttribute<DisplayAttribute>()
-                            ?.GetName();
+                            ?.GetName() ?? enumObj.ToString();
         }
     }
 }

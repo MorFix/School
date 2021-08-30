@@ -1,33 +1,42 @@
-﻿@model IEnumerable<School.Entities.Lesson>
+﻿@using School.Controllers;
+@model IEnumerable<School.Entities.Lesson>
 
 @{
-    ViewData["Title"] = "Schedule";
+    ViewData["Title"] = "מערכת שעות";
+
     var lessons = Model
         .GroupBy(x => x.Hour)
         .ToDictionary(x => x.Key, y => y.ToList());
+
+    var minHour = lessons.Keys.Min();
+    var maxHour = lessons.Keys.Max();
+
+    var days = Enum
+        .GetValues<DayOfWeek>()
+        .Where(x => x != DayOfWeek.Saturday);
 }
 
 <table class="table table-bordered center-table">
     <thead>
-        <tr>
+        <tr style="background: aliceblue;">
             <td></td>
-            <td>א</td>
-            <td>ב</td>
-            <td>ג</td>
-            <td>ד</td>
-            <td>ה</td>
-            <td>ו</td>
+            @foreach (var day in days) {
+                <td>@LessonController.GetDayDisplayName(day)</td>
+            }
         </tr>
     </thead>
     <tbody>
-        @foreach (var hour in lessons.Keys)
+        @for (var hour = minHour; hour <= maxHour; hour++)
         {
             var nextHour = hour + 1;
+
             <tr>
-                <td>@nextHour:00 - @hour:00</td>
-                @foreach (var lesson in lessons[hour].OrderBy(x => x.DayOfWeek))
+                <td style="background: aliceblue;">@nextHour:00 - @hour:00</td>
+                
+                @foreach (var day in days)
                 {
-                    <td>@lesson.Subject</td>
+                    var lesson = lessons[hour].FirstOrDefault(x => x.DayOfWeek == day);
+                    <td>@Html.DisplayFor(_ => lesson.Subject)</td>
                 }
             </tr>
         }

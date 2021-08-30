@@ -1,4 +1,5 @@
-﻿@model School.Entities.Lesson
+﻿@using School.Controllers;
+@model School.Entities.Lesson
 
 @{
     ViewData["Title"] = "מחיקת שיעור";
@@ -11,38 +12,38 @@
     <h4>שיעור</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             מורה
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Teacher.FullName)
-        </dd class>
-        <dt class = "col-sm-2">
+        </dd>
+        <dt class="col-sm-2">
             חדר
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Room.Name)
-        </dd class>
-        <dt class = "col-sm-2">
+        </dd>
+        <dt class="col-sm-2">
             נושא
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Subject)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             יום
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DayOfWeek)
+        <dd class="col-sm-10">
+            @LessonController.GetDayDisplayName(Model.DayOfWeek)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             שעה
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Hour)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="מחק" class="btn btn-danger" /> |

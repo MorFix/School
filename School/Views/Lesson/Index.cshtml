@@ -1,4 +1,5 @@
-﻿@model IEnumerable<School.Entities.Lesson>
+﻿@using School.Controllers;
+@model IEnumerable<School.Entities.Lesson>
 
 @{
     ViewData["Title"] = "ניהול שיעורים";
@@ -51,7 +52,7 @@
                     @Html.DisplayFor(modelItem => item.Room.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                    @LessonController.GetDayDisplayName(item.DayOfWeek)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Hour)
