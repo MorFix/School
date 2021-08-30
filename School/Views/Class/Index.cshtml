@@ -1,0 +1,68 @@
+﻿@model IEnumerable<School.Entities.Class>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "כיתות";
+
+    var searchName = "searchString";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>כיתות</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">יצירת כיתה</a>
+    </p>
+
+    <form asp-controller="Class" asp-action="Index" method="get">
+        <p>
+            <span>שם כיתה</span>
+            <input name="@searchName" type="text" placeholder="חיפוש" value="@Context.Request.Query[searchName]" />
+            <input type="submit" value="סינון" />
+        </p>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">עריכה</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">פרטים</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">מחיקה</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

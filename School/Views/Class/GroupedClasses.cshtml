@@ -1,0 +1,42 @@
+﻿@model IEnumerable<IGrouping<string, School.ViewModels.FullNameViewModel>>
+
+@{
+    ViewData["Title"] = "כיתות";
+}
+
+<table class="table table-bordered center-table">
+    <thead>
+        <tr>
+            @foreach (var className in Model.Select(x => x.Key))
+            {
+                <td>@className</td>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var c in Model)
+            {
+                <td>
+                    <table class="table table-bordered center-table">
+                        <thead>
+                            <tr>
+                                <td>שם פרטי</td>
+                                <td>שם משפחה</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in c.ToList())
+                            {
+                                <tr>
+                                    <td>@student.FirstName</td>
+                                    <td>@student.LastName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,48 @@
+﻿@model School.Entities.Lesson
+
+@{
+    ViewData["Title"] = "פרטי שיעור";
+}
+
+<h1>פרטים</h1>
+
+<div>
+    <h4>שיעור</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           מורה
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Teacher.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            חדר
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Room.Name)
+        </dd>
+        <dt class = "col-sm-2">
+           מקצוע
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+        <dt class = "col-sm-2">
+            יום
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DayOfWeek)
+        </dd>
+        <dt class = "col-sm-2">
+            שעה
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Hour)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">ערוך</a> |
+    <a asp-action="Index">חזור לרשימת השיעורים</a>
+</div>

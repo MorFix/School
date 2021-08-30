@@ -1,0 +1,39 @@
+﻿@model IEnumerable<School.Entities.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<script>
+    function saveBehavior(student) {
+        const value = document.getElementById(`behavior-student-${student}`).value;
+
+        $.ajax({
+            url: `/students/?student=${student}&behavior=${value}`,
+            method: 'PUT',
+            success: function () { alert('השמירה בוצעה') },
+            error: function () { alert('השמירה נכשלה') }
+        })
+    }
+</script>
+
+<table class="table table-bordered center-table">
+    <thead>
+        <tr>
+            <td>שם</td>
+            <td>התנהגות</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.OrderBy(x => x.LastName))
+        {
+            <tr>
+                <td>@student.FullName</td>
+                <td>
+                    <select id="behavior-student-@student.IdNumber" class="form-control" asp-items="student.Behavior.ToSelectList()"></select>
+                    <a href="#" onclick="saveBehavior(@student.IdNumber)">שמור‎</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
