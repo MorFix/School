@@ -11,3 +11,7 @@
 .video {
     margin: 20px
 }
+
+.body {
+    height: 100vh;
+}

@@ -32,83 +32,84 @@
         }
     </script>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <canvas id="myCanvas" width="200" height="100"></canvas>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    @if (User.Identity.IsAuthenticated && user != null)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">ראשי</a>
-                        </li>
-                        @if (user.permissionsLevel == School.Enums.PermissionsLevel.Watch)
+<body class="body overflow-hidden d-flex flex-column w-100">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <canvas id="myCanvas" width="200" height="100"></canvas>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity.IsAuthenticated && user != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">ראשי</a>
                             </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">דף קשר</a>
-                        </li>
-                        @if (user.permissionsLevel == School.Enums.PermissionsLevel.Manage)
-                        {
+                            @if (user.permissionsLevel == School.Enums.PermissionsLevel.Watch)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">מערכת שעות</a>
+                                </li>
+                            }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="GroupedClasses">דף קשר</a>
                             </li>
+                            @if (user.permissionsLevel == School.Enums.PermissionsLevel.Manage)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">גיליון התנהגות למורים</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="Index">ניהול כיתות</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Lesson" asp-action="Index">ניהול שיעורים</a>
+                                </li>
+                            }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Class" asp-action="Index">ניהול כיתות</a>
+                                <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">
+                                    <img src="https://facebook.com/favicon.ico" alt="" />
+                                </button>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lesson" asp-action="Index">ניהול שיעורים</a>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">
-                                <img src="https://facebook.com/favicon.ico" alt="" />
-                            </button>
-                        </li>
 
-                        <li class="flex-grow-1" />
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" style="font-weight: bold" asp-area="" asp-controller="User" asp-action="Index">שלום @user?.FirstName</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">יציאה</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">הרשמה</a>
-                        </li>
-                    }
-                </ul>
+                            <li class="flex-grow-1" />
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" style="font-weight: bold" asp-area="" asp-controller="User" asp-action="Index">שלום @user?.FirstName</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">יציאה</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">הרשמה</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-<div class="container" dir="rtl">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-    
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - School
+        </nav>
+    </header>
+    <div class="container d-flex flex-fill overflow-hidden" dir="rtl">
+        <main role="main" class="pb-3 d-flex flex-fill flex-column overflow-hidden">
+            @RenderBody()
+        </main>
     </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - School
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 <script>
