@@ -7,6 +7,7 @@ using School.Enums;
 using System.Threading.Tasks;
 using System;
 using System.Data.Entity;
+using School.ViewModels;
 
 namespace School.Controllers
 {
@@ -48,9 +49,17 @@ namespace School.Controllers
         [Route("studentsByClass")]
         public IActionResult StudentsByClasses()
         {
-            var studentsCountByClass = _ctx.Students
-                .ToList()
-                .GroupBy(x => x.Class.Name)
+            var studentsCountByClass = _ctx.Classes
+                .Join(
+                    _ctx.Students,
+                    c => c.Id,
+                    s => s.ClassId,
+                    (c, s) => new
+                    {
+                        ClassName = c.Name,
+                    }
+                ).ToList().OrderBy(x => x.ClassName)
+                .GroupBy(x => x.ClassName)
                 .ToDictionary(x => x.Key, x => x.Count());
 
             return Ok(studentsCountByClass);

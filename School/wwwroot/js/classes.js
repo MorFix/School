@@ -18,7 +18,7 @@ function drawSvg(studentsCountByClass) {
         height = 520 - margin.top - margin.bottom;
 
     // append the svg object
-    const svg = d3.select("#studentsByBehaviorChart")
+    const svg = d3.select("#studentByClasses")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
