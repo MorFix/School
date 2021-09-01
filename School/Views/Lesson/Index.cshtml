@@ -17,8 +17,9 @@
     </p>
 </form>
 
-<table class="table">
-    <thead>
+<div class="overflow-auto">
+    <table class="table">
+        <thead>
         <tr>
             <th>
                 מורה
@@ -37,8 +38,8 @@
             </th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -64,5 +65,7 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+</div>

@@ -44,8 +44,13 @@ namespace School.Seed
             var class2 = new Class("א2", ClassLevel.First, teacher2.Id, room2.Id);
             var class3 = new Class("א3", ClassLevel.First, teacher3.Id, room3.Id);
 
+<<<<<<< HEAD:School/Seed/SchoolSeed.cs
             var student1 = new Student("312345614", "שלמה", "מנשה", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
+            var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Excellent);
+=======
+            var student1 = new Student("312345614", "Avi", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
             var student2 = new Student("314832908", "Inbal", "Avraham", "1234", class1.Id, "מבצע ליטאני 2", PermissionsLevel.Manage, behavior: StudentBehavior.Excellent);
+>>>>>>> 8b3b3aa... wip:SportStore/Seed/SchoolSeed.cs
             var student3 = new Student("316345631", "Daniel", "Amit", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.VeryGood);
             var student4 = new Student("314832911", "Michael", "Menash", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Enough);
             var student5 = new Student("325674677", "Ronit", "Danon", "1234", class1.Id, "מבצע ליטאני 2", behavior: StudentBehavior.Good);

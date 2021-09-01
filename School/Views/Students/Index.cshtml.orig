@@ -1,10 +1,10 @@
-﻿@model IEnumerable<School.Entities.Student>
-@inject IJsonHelper Json;
+﻿@inject IJsonHelper Json;
 
 @{
     ViewData["Title"] = "Students";
 }
 
+<script src="js/statistics.js"></script>
 <script>
     function getMaxCount(studentsCountByBehavior) {
         let max = 0;
@@ -16,13 +16,11 @@
         return max + (10 - (max % 10));
     };
 
-    function drawSvg(studentsCountByBehavior) {
-        d3.selectAll("svg").remove();
-
+    function updateChart(studentsCountByBehavior) {
         // set the dimensions and margins of the graph
-        const margin = { top: 30, right: 30, bottom: 30, left: 60 },
+        const margin = { top: 30, right: 30, bottom: 70, left: 60 },
             width = 600 - margin.left - margin.right,
-            height = 520 - margin.top - margin.bottom;
+            height = 600 - margin.top - margin.bottom;
 
         // append the svg object
         const svg = d3.select("#studentsByBehaviorChart")
@@ -63,16 +61,11 @@
             .attr("width", x.bandwidth())
             .attr("height", function(b) { return height - y(studentsCountByBehavior[b]); })
             .attr("fill", "#3c96cf");
-    }
-
-    function updateChart() {
-        $.get("/students/studentsByBehavior",
-            data => {
-                drawSvg(data);
-            });
     };
 
-    $(document).ready(function () { updateChart() });
+    var studentsByBehavior = @Json.Serialize(ViewBag.StudentsByBehavior);
+
+    $(document).ready(function() { updateChart(studentsByBehavior) });
 
     function saveBehavior(student) {
         const value = document.getElementById(`behavior-student-${student}`).value;
@@ -81,7 +74,7 @@
             url: `/students/?student=${student}&behavior=${value}`,
             method: 'PUT',
             success: function() {
-                updateChart();
+                updateChart(studentsByBehavior);
                 alert('השמירה בוצעה')
             },
             error: function() { alert('השמירה נכשלה') }
@@ -94,7 +87,7 @@
 <div class="container d-flex p-4 overflow-hidden">
     <div class="flex-grow-1 h-100 mh-100 overflow-auto">
         <table class="table table-bordered center-table">
-            <thead class="table-light">
+            <thead class="thead-light">
             <tr>
                 <td class="d-sm-table-cell">שם</td>
                 <td>התנהגות</td>
