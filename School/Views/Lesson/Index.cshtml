@@ -1,5 +1,5 @@
 ﻿@using School.Controllers;
-@model IEnumerable<School.Entities.Lesson>
+@model IEnumerable<Tuple<School.Entities.Lesson, School.Entities.Teacher>>
 
 @{
     ViewData["Title"] = "ניהול שיעורים";
@@ -44,24 +44,24 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Teacher.FullName)
+                    @Html.DisplayFor(modelItem => item.Item2.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Subject)
+                    @Html.DisplayFor(modelItem => item.Item1.Subject)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Room.Name)
+                    @Html.DisplayFor(modelItem => item.Item1.Room.Name)
                 </td>
                 <td>
-                    @LessonController.GetDayDisplayName(item.DayOfWeek)
+                    @LessonController.GetDayDisplayName(item.Item1.DayOfWeek)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Hour)
+                    @Html.DisplayFor(modelItem => item.Item1.Hour)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">פרטים</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                    <a asp-action="Edit" asp-route-id="@item.Item1.Id">ערוך</a> |
+                    <a asp-action="Details" asp-route-id="@item.Item1.Id">פרטים</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Item1.Id">מחק</a>
                 </td>
             </tr>
         }

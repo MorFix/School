@@ -28,12 +28,18 @@ namespace School.Controllers
         public async Task<IActionResult> Index(string teacher = "")
         {
             var hasQuery = !string.IsNullOrWhiteSpace(teacher);
+  
             var lessons = await _context.Lessons
-                .Include(l => l.Room)
-                .Include(l => l.Teacher)
-                .ToListAsync();
+               .Include(l => l.Room)
+               .Join(
+                   _context.Teachers,
+                   l => l.TeacherId,
+                   t => t.Id,
+                   (l, t) => new Tuple<Lesson, Teacher>(l, t)
+               )
+               .ToListAsync();
 
-            return View(lessons.Where(x => !hasQuery || x.Teacher != null && x.Teacher.FullName.Contains(teacher, StringComparison.CurrentCultureIgnoreCase)));
+            return View(lessons.Where(x => !hasQuery || x.Item2 != null && x.Item2.FullName.Contains(teacher, StringComparison.CurrentCultureIgnoreCase)));
         }
 
         [Permissions(PermissionsLevel.Manage)]
