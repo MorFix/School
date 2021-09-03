@@ -18,6 +18,7 @@ namespace School.Entities
         public PermissionsLevel permissionsLevel { get; set; }
 
         [NotMapped]
+        [Display(Name = "שם")]
         public string FullName
         {
             get

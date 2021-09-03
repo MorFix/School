@@ -25,21 +25,34 @@ namespace School.Controllers
 
         [Permissions(PermissionsLevel.Manage)]
         // GET: Lesson
-        public async Task<IActionResult> Index(string teacher = "")
+        public IActionResult Index(string teacher = null, string subject = null, string dayOfWeek = null)
         {
-            var hasQuery = !string.IsNullOrWhiteSpace(teacher);
-  
-            var lessons = await _context.Lessons
-               .Include(l => l.Room)
-               .Join(
+            var filters = new Predicate<Lesson>[] {
+                x => string.IsNullOrWhiteSpace(teacher) || x.Teacher?.Id.ToString() == teacher,
+                x => string.IsNullOrWhiteSpace(subject) || x.Subject.ToString() == subject,
+                x => string.IsNullOrWhiteSpace(dayOfWeek) || x.DayOfWeek.ToString() == dayOfWeek
+            };
+
+            var lessons = _context.Lessons
+                .Include(l => l.Room)
+                .Join(
                    _context.Teachers,
                    l => l.TeacherId,
                    t => t.Id,
                    (l, t) => new Tuple<Lesson, Teacher>(l, t)
-               )
-               .ToListAsync();
+                )
+                .ToList()
+                .Where(x => filters.All(filter => filter(x.Item1)));
 
-            return View(lessons.Where(x => !hasQuery || x.Item2 != null && x.Item2.FullName.Contains(teacher, StringComparison.CurrentCultureIgnoreCase)));
+            ViewData["Teachers"] = new SelectList(new object[] { new { Id = "", FullName = "(כולם)" } }.Concat(_context.Teachers), "Id", "FullName", teacher);
+
+            var parseSubject = Enum.TryParse<Subject>(subject, out var subjectValue);
+            ViewData["Subjects"] = (parseSubject ? subjectValue : 0).ToSelectList(withEmpty: true);
+
+            var parseDay = Enum.TryParse<DayOfWeek>(dayOfWeek, out var dayValue);
+            ViewData["DaysOfWeek"] = (parseDay ? dayValue : (DayOfWeek) (-1)).ToSelectList(GetDayDisplayName, true);
+            
+            return View(lessons);
         }
 
         [Permissions(PermissionsLevel.Manage)]

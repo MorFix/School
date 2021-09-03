@@ -39,7 +39,7 @@ namespace School.Controllers
         public IActionResult StudentsByBehavior()
         {
             var studentsByBehavior = _ctx.Students.ToList().GroupBy(x => x.Behavior)
-                .ToDictionary(x => x.Key, x => x.Count());
+                .ToDictionary(x => x.Key.GetEnumDisplayName(), x => x.Count());
 
             return Ok(studentsByBehavior);
         }

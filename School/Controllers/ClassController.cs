@@ -94,6 +94,11 @@ namespace School.Controllers
         [Permissions(PermissionsLevel.Manage)]
         public async Task<IActionResult> Create([Bind("Name,Level,TeacherId,RoomId,Id")] Class @class)
         {
+            if (_context.Classes.Any(x => x.Id != @class.Id && x.RoomId == @class.RoomId))
+            {
+                ModelState.AddModelError(nameof(Class.RoomId), "החדר שנבחר כבר מקושר לכיתה אחרת");
+            }
+
             if (ModelState.IsValid)
             {
                 @class.Id = Guid.NewGuid();
@@ -140,6 +145,11 @@ namespace School.Controllers
             if (id != @class.Id)
             {
                 return NotFound();
+            }
+
+            if (_context.Classes.Any(x => x.Id != @class.Id && x.RoomId == @class.RoomId))
+            {
+                ModelState.AddModelError(nameof(Class.RoomId), "החדר שנבחר כבר מקושר לכיתה אחרת");
             }
 
             if (ModelState.IsValid)

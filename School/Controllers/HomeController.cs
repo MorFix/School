@@ -71,6 +71,12 @@ namespace School.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

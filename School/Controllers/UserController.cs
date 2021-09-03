@@ -25,20 +25,25 @@ namespace School.Controllers
         }
 
         // GET: User
-        public IActionResult Index(string idNumber = "", string name = "")
+        public IActionResult Index(string idNumber = "", string name = "", string classFilter = "")
         {
             var currentUser = HttpContext.GetSchoolUser();
 
             var filters = new Predicate<User>[] {
                 x => x.Id == currentUser.Id || x is Student,
                 x => string.IsNullOrWhiteSpace(idNumber) || x.IdNumber.Contains(idNumber),
-                x => string.IsNullOrWhiteSpace(name) || x.FullName.Contains(name, StringComparison.CurrentCultureIgnoreCase)
+                x => string.IsNullOrWhiteSpace(name) || x.FullName.Contains(name, StringComparison.CurrentCultureIgnoreCase),
+                x => string.IsNullOrWhiteSpace(classFilter) || x is Student s && s.ClassId.ToString() == classFilter
             };
 
             if (currentUser.permissionsLevel == PermissionsLevel.Manage) {
                 var students = _context.Users.ToList()
                     .Where(x => filters.All(filter => filter(x)))
                     .OrderByDescending(x => x.Id == currentUser.Id);
+
+                var classes = _context.Classes.ToList().OrderBy(x => x.Name);
+
+                ViewData["Classes"] = new SelectList(new object[] { new { Id = "", Name = "(הכל)" } }.Concat(classes) , "Id", "Name", classFilter);
 
                 return View("Index", students);
             }
@@ -79,6 +84,11 @@ namespace School.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             ViewData["ClassId"] = new SelectList(_context.Classes.ToList().OrderBy(x => x.Name), "Id", "Name");
             ViewData["Type"] = UserType.Student.ToSelectList();
 
@@ -99,7 +109,7 @@ namespace School.Controllers
 
                 if (dbUser != null)
                 {
-                    ViewBag.Error = "?????? ???? ????";
+                    ViewBag.Error = "המשתמש אינו קיים";
                     ViewData["ClassId"] = new SelectList(_context.Classes.ToList().OrderBy(x => x.Name), "Id", "Name");
                     ViewData["Type"] = UserType.Student.ToSelectList();
                     return View();

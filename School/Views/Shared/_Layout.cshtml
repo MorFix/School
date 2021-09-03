@@ -1,5 +1,8 @@
 ﻿@{
     var user = Context.GetSchoolUser();
+
+    var welcomeTextBase = $"שלום {user?.FirstName}";
+    var welcomeText = user?.permissionsLevel == School.Enums.PermissionsLevel.Manage ? $"{welcomeTextBase} (ניהול משתמשים)" : welcomeTextBase;
 }
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
@@ -36,7 +39,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <canvas id="myCanvas" width="200" height="100"></canvas>
+                <a asp-controller="Home" asp-action="Index">
+                    <canvas id="myCanvas" width="200" height="100"></canvas>
+                </a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -70,6 +76,9 @@
                                 </li>
                             }
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="About">אודות</a>
+                            </li>
+                            <li class="nav-item">
                                 <button onclick="openShareDialog()" style="background: transparent; border: 0; padding: 0; margin-top: 7px;">
                                     <img src="https://facebook.com/favicon.ico" alt="" />
                                 </button>
@@ -77,7 +86,7 @@
 
                             <li class="flex-grow-1" />
                             <li class="nav-item">
-                                <a class="nav-link text-dark" style="font-weight: bold" asp-area="" asp-controller="User" asp-action="Index">שלום @user?.FirstName</a>
+                                <a class="nav-link text-dark" style="font-weight: bold" asp-area="" asp-controller="User" asp-action="Index">@welcomeText</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">יציאה</a>
@@ -87,6 +96,9 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">הרשמה</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="About">אודות</a>
                             </li>
                         }
                     </ul>

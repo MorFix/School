@@ -5,13 +5,26 @@
 }
 
 .center-table {
-    text-align: center
+    text-align: center;
 }
 
 .video {
-    margin: 20px
+    margin: 20px;
 }
 
 .body {
     height: 100vh;
+}
+
+.welcome {
+    text-shadow: 2px 2px #3D658A;
+    transition: transform 1s;
+}
+
+.welcome:hover {
+    transform: scale(1.2, 1.2);
+}
+
+.about {
+    column-count: 3;
 }

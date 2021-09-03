@@ -5,7 +5,7 @@ namespace School.Enums
     public enum StudentBehavior
     {
         [Display(Name = "גרועה")]
-        VeryBad,
+        VeryBad = 1,
 
         [Display(Name = "לא טובה")]
         Bad,

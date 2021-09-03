@@ -7,56 +7,64 @@
 
 <h1>עריכת משתמשים</h1>
 
-<form asp-controller="User" asp-action="Index" method="get">
-    <p>
-        <span>תעודת זהות</span>
-        <input name="idNumber" type="text" value="@Context.Request.Query["idNumber"]" />
-    </p>
+<form asp-controller="User" asp-action="Index" method="get" class="col-md-4">
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.IdNumber)</label>
+        <input name="idNumber" type="text" class="form-control" value="@Context.Request.Query["idNumber"]" />
+    </div>
 
-    <p>
-        <span>שם תלמיד</span>
-        <input name="name" type="text" placeholder="חיפוש" value="@Context.Request.Query["name"]" />
-    </p>
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.FullName)</label>
+        <input name="name" type="text" class="form-control" placeholder="חיפוש" value="@Context.Request.Query["name"]" />
+    </div>
 
-    <p>
-        <input type="submit" value="סינון" />
-    </p>
+    <div class="form-group">
+        <label>כיתה</label>
+        <select name="classFilter" class="form-control" asp-items="ViewBag.Classes"></select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="סינון" />
+    </div>
 </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    var isMe = item.IdNumber == idNumber;
-        <tr style="@(isMe ? "Background-color:red" : "")">
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a>
-                <a asp-action="Details" asp-route-id="@item.Id">פרטים</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="overflow-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var isMe = item.IdNumber == idNumber;
+                <tr style="@(isMe ? "background-color:aliceblue" : "")">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">ערוך</a>
+                        <a asp-action="Details" asp-route-id="@item.Id">פרטים</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">מחק</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -9,12 +9,26 @@
     <a asp-action="Create">צור שיעור חדש</a>
 </p>
 
-<form asp-controller="Lesson" asp-action="Index" method="get">
-    <p>
-        <span>סינון לפי מורה</span>
-        <input name="teacher" type="text" value="@Context.Request.Query["teacher"]" />
-        <input type="submit" value="סינון" />
-    </p>
+
+<form asp-controller="Lesson" asp-action="Index" method="get" class="col-md-4">
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.Item1.Teacher)</label>
+        <select name="teacher" class="form-control" asp-items="ViewBag.Teachers"></select>
+    </div>
+
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.Item1.Subject)</label>
+        <select name="subject" class="form-control" asp-items="ViewBag.Subjects"></select>
+    </div>
+
+    <div class="form-group">
+        <label>@Html.DisplayNameFor(model => model.Item1.DayOfWeek)</label>
+        <select name="dayOfWeek" class="form-control" asp-items="ViewBag.DaysOfWeek"></select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="סינון" />
+    </div>
 </form>
 
 <div class="overflow-auto">
@@ -22,19 +36,19 @@
         <thead>
         <tr>
             <th>
-                מורה
+                @Html.DisplayNameFor(model => model.Item1.Teacher)
             </th>
             <th>
-                מקצוע
+                @Html.DisplayNameFor(model => model.Item1.Subject)
             </th>
             <th>
-                חדר
+                @Html.DisplayNameFor(model => model.Item1.Room)
             </th>
             <th>
-                יום
+                @Html.DisplayNameFor(model => model.Item1.DayOfWeek)
             </th>
             <th>
-                שעה
+                @Html.DisplayNameFor(model => model.Item1.Hour)
             </th>
             <th></th>
         </tr>
